@@ -1,3 +1,4 @@
+local vim = vim
 local opt = vim.opt
 local cmd = vim.cmd
 local g = vim.g
@@ -46,5 +47,8 @@ opt.shiftround = true -- round indent to a multiple of 'shiftwidth'
 
 -- Mappings
 g.mapleader = ","
+
+vim.api.nvim_set_keymap('n', '<C-f>', '<C-d>', { noremap = true, silent = true }) -- jump half page down
+vim.api.nvim_set_keymap('n', '<C-b>', '<C-u>', { noremap = true, silent = true }) -- jump half page up
 
 require("lazypkg")
