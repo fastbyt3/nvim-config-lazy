@@ -45,6 +45,10 @@ opt.softtabstop = 4 -- edit as if the tabs are 4 characters wide
 opt.shiftwidth = 4 -- number of spaces to use for indent and unindent
 opt.shiftround = true -- round indent to a multiple of 'shiftwidth'
 
+-- highlight current line number alone
+opt.cursorline = true
+opt.cursorlineopt="number"
+
 -- Mappings
 g.mapleader = ","
 

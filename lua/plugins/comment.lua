@@ -1,7 +1,8 @@
 return {
 	{
 		'numToStr/Comment.nvim',
-		lazy = false,
+		lazy = true,
+		event = { "BufReadPost", "BufAdd", "BufNewFile" },
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = function ()
 			require("Comment").setup({

@@ -53,7 +53,13 @@ return {
 			},
 			mapping = {
 				['<CR>'] = cmp.mapping.confirm({select = false}),
-			}
+			},
+			window = {
+				-- completion = cmp.config.window.bordered {},
+				documentation = {
+					winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+				},
+			},
 		})
 
 	end
