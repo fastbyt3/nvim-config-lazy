@@ -55,4 +55,12 @@ g.mapleader = ","
 vim.api.nvim_set_keymap('n', '<C-f>', '<C-d>', { noremap = true, silent = true }) -- jump half page down
 vim.api.nvim_set_keymap('n', '<C-b>', '<C-u>', { noremap = true, silent = true }) -- jump half page up
 
+-- Inc / Dec search
+vim.keymap.set('n', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
+vim.keymap.set('x', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
+vim.keymap.set('o', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
+vim.keymap.set('n', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Previous search result' })
+vim.keymap.set('x', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Previous search result' })
+vim.keymap.set('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Previous search result' })
+
 require("lazypkg")
