@@ -11,7 +11,8 @@ return {
 					nvimtree = true,
 				}
 			})
-			vim.cmd([[colorscheme catppuccin-macchiato]])
+			-- vim.cmd([[colorscheme catppuccin-macchiato]])
+			vim.cmd([[colorscheme catppuccin-mocha]])
 		end
 	},
 	{
@@ -46,8 +47,24 @@ return {
 		end
 	},
 	{
+		"luisiacc/gruvbox-baby",
+	},
+	{
 		"dracula/vim",
 		name = "dracula",
 		lazy = true,
+		event = "VeryLazy",
+	},
+	{
+		"glepnir/zephyr-nvim",
+		name = "zephyr",
+		lazy = true,
+		event = "VeryLazy",
+	},
+	{
+		"nyoom-engineering/oxocarbon.nvim",
+		lazy = true,
+		event = "VeryLazy",
+		name = "oxocarbon",
 	},
 }
