@@ -49,6 +49,13 @@ return {
 
 		lsp.setup()
 
+		-- Go
+		require'lspconfig'.gopls.setup{
+			on_attach = function(_, bufnr)
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, {buffer=bufnr})
+			end
+		}
+
 		-- rust
 		local rust_tools = require('rust-tools')
 
@@ -85,6 +92,7 @@ return {
 				auto_focus = false,
 			},
 		})
+		vim.cmd([[ autocmd BufWritePre *.rs lua vim.lsp.buf.format({async = false }) ]])
 
 		-- setup cmp
 		local cmp = require('cmp')

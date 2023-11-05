@@ -12,7 +12,7 @@ opt.swapfile = false -- don't create swap files for new buffers
 opt.updatecount = 0 -- don't write swap files after some number of updates
 
 opt.history = 1000 -- store the last 1000 commands entered
-opt.textwidth = 120 -- after configured number of characters, wrap line
+-- opt.textwidth = 120 -- after configured number of characters, wrap line
 
 -- searching
 opt.ignorecase = true -- case insensitive searching
@@ -33,7 +33,7 @@ o.termguicolors = true
 opt.number = true -- show line numbers
 opt.relativenumber = true -- show line numbers
 opt.wrap = true -- turn on line wrapping
-opt.wrapmargin = 8 -- wrap lines when coming within n characters from side
+-- opt.wrapmargin = 8 -- wrap lines when coming within n characters from side
 opt.linebreak = true -- set soft wrapping
 opt.showbreak = "↪"
 opt.autoindent = true -- automatically set indent of new line
@@ -49,6 +49,19 @@ opt.shiftround = true -- round indent to a multiple of 'shiftwidth'
 -- highlight current line number alone
 opt.cursorline = true
 opt.cursorlineopt="number"
+
+-- Ruler(120 chars) except for md
+_G.setup_vertical_ruler = function()
+    local filetype = vim.bo.filetype
+    if filetype ~= 'markdown' then
+        vim.cmd('setlocal colorcolumn=120')
+    else
+        vim.cmd('setlocal colorcolumn=')
+    end
+end
+
+vim.cmd('autocmd BufEnter * lua setup_vertical_ruler()')
+setup_vertical_ruler()
 
 -- Mappings
 g.mapleader = ","
