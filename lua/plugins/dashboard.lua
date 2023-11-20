@@ -6,7 +6,7 @@ return {
 			theme = 'hyper',
 			config = {
 				week_header = {
-				enable = true,
+					enable = true,
 				},
 				shortcut = {
 					{

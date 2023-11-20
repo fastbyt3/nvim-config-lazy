@@ -54,13 +54,13 @@ opt.cursorlineopt="number"
 _G.setup_vertical_ruler = function()
     local filetype = vim.bo.filetype
     if filetype ~= 'markdown' then
-        vim.cmd('setlocal colorcolumn=120')
+        cmd('setlocal colorcolumn=120')
     else
-        vim.cmd('setlocal colorcolumn=')
+        cmd('setlocal colorcolumn=')
     end
 end
 
-vim.cmd('autocmd BufEnter * lua setup_vertical_ruler()')
+cmd('autocmd BufEnter * lua setup_vertical_ruler()')
 setup_vertical_ruler()
 
 -- Mappings
@@ -76,6 +76,9 @@ vim.keymap.set('o', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next se
 vim.keymap.set('n', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Previous search result' })
 vim.keymap.set('x', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Previous search result' })
 vim.keymap.set('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Previous search result' })
+
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<NOP>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<ESC>', ':noh<CR>', { silent = true })
 
 -- remap quit and write to use leader key
 -- vim.api.nvim_set_keymap('n', ',qq', ':q<CR>', { noremap = true, silent = true })

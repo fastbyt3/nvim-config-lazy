@@ -27,11 +27,13 @@ return {
 			set_env = {["COLORTERM"] = "truecolor"},
 		})
 
+		pcall(telescope.load_extension, 'fzf')
 
 		-- setup keybindings
 		local keymap = vim.keymap
 		keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
 		keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<cr>")
 		keymap.set("n", "<C-p>", "<cmd>Telescope buffers<cr>")
+		keymap.set("n", "<leader>xx", "<cmd>Telescope diagnostics<cr>")
 	end
 }

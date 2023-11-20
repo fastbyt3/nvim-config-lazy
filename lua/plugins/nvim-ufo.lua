@@ -7,7 +7,7 @@ return {
 	config = function ()
 		local ufo = require('ufo')
 
-		vim.o.foldcolumn = '1' -- '0' is not bad
+		vim.o.foldcolumn = '0' -- '0' is not bad
 		vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 		vim.o.foldlevelstart = 99
 		vim.o.foldenable = true
@@ -67,10 +67,12 @@ return {
 			return newVirtText
 		end
 
+		local filetypes = { markdown = '' }
+
 		ufo.setup({
 			fold_virt_text_handler = handler,
-			provider_selector = function (bufnr, filetype, buftype)
-				return { 'lsp', 'indent' }
+			provider_selector = function (_, ft)
+				return filetypes[ft] or { 'lsp', 'indent' }
 			end,
 			preview = {
 				mappings = {
