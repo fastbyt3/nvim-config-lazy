@@ -55,16 +55,16 @@ return {
 		lazy = true,
 		event = "VeryLazy",
 	},
-	{
-		"glepnir/zephyr-nvim",
-		name = "zephyr",
-		lazy = true,
-		event = "VeryLazy",
-	},
-	{
-		"nyoom-engineering/oxocarbon.nvim",
-		lazy = true,
-		event = "VeryLazy",
-		name = "oxocarbon",
-	},
+	-- {
+	-- 	"glepnir/zephyr-nvim",
+	-- 	name = "zephyr",
+	-- 	lazy = true,
+	-- 	event = "VeryLazy",
+	-- },
+	-- {
+	-- 	"nyoom-engineering/oxocarbon.nvim",
+	-- 	lazy = true,
+	-- 	event = "VeryLazy",
+	-- 	name = "oxocarbon",
+	-- },
 }

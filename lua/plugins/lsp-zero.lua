@@ -17,39 +17,54 @@ return {
 				"hrsh7th/cmp-nvim-lsp-signature-help",
 				"saadparwaiz1/cmp_luasnip",
 				"hrsh7th/cmp-nvim-lua",
-				"hrsh7th/cmp-vsnip",
-				"hrsh7th/vim-vsnip",
+				-- "hrsh7th/cmp-vsnip",
+				-- "hrsh7th/vim-vsnip",
 				"hrsh7th/cmp-path",
-				"rafamadriz/friendly-snippets",
+				-- "rafamadriz/friendly-snippets",
 			},
 		},
-		{'L3MON4D3/LuaSnip'},     -- Required
+		-- {'L3MON4D3/LuaSnip'},     -- Required
 		{'simrat39/rust-tools.nvim'},          -- Required for rust
 	},
 	config = function()
-		local lsp = require('lsp-zero').preset({})
+		local lsp = require('lsp-zero')
+		lsp.preset("recommended")
 
 		lsp.on_attach(function(client, bufnr)
 			-- see :help lsp-zero-keybindings
 			-- to learn the available actions
 			lsp.default_keymaps({buffer = bufnr})
-			vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, {buffer = bufnr, remap = false})
-			vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, {buffer = bufnr, remap = false})
+			local opts = {buffer = bufnr, remap = false}
+			vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
+			vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+			vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 		end)
-
-		lsp.configure('lua_ls', {
-			settings = {
-				Lua = {
-					diagnostics = {
-						globals = { 'vim' }
-					}
-				}
-			}
-		})
 
 		lsp.skip_server_setup({'rust_analyzer'})
 
 		lsp.setup()
+
+		-- Fix Undefined global 'vim'
+		require('lspconfig').lua_ls.setup({
+			workspace = {
+				preloadFileSize = 1000
+			}
+		})
+		-- require'lspconfig'.lua_ls.setup{
+		-- 	settings = {
+		-- 		Lua = {
+		-- 			runtime = {
+		-- 				version = "LuaJIT"
+		-- 			},
+		-- 			workspace = {
+		-- 				preloadFileSize = 1000
+		-- 			},
+		-- 			diagnostics = {
+		-- 				globals = { 'vim' }
+		-- 			}
+		-- 		}
+		-- 	}
+		-- }
 
 		-- Go
 		require'lspconfig'.gopls.setup{
@@ -113,9 +128,9 @@ return {
 		cmp.setup({
 			snippet = {
 				-- REQUIRED - you must specify a snippet engine
-				expand = function(args)
-					vim.fn["vsnip#anonymous"](args.body)
-				end,
+				-- expand = function(args)
+				-- 	vim.fn["vsnip#anonymous"](args.body)
+				-- end,
 			},
 			preselect = 'item',
 			completion = {
@@ -146,24 +161,24 @@ return {
 				-- 		feedkey("<Plug>(vsnip-jump-prev)", "")
 				-- 	end
 				-- end, { "i", "s" }),
-				["<Tab>"] = cmp.mapping(function(fallback)
-					if cmp.visible() then
-						cmp.select_next_item()
-					elseif vim.fn["vsnip#available"](1) == 1 then
-						feedkey("<Plug>(vsnip-expand-or-jump)", "")
-					elseif has_words_before() then
-						cmp.complete()
-					else
-						fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-					end
-				end, { "i", "s" }),
-				["<S-Tab>"] = cmp.mapping(function()
-					if cmp.visible() then
-						cmp.select_prev_item()
-					elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-						feedkey("<Plug>(vsnip-jump-prev)", "")
-					end
-				end, { "i", "s" }),
+				-- ["<Tab>"] = cmp.mapping(function(fallback)
+				-- 	if cmp.visible() then
+				-- 		cmp.select_next_item()
+				-- 	elseif vim.fn["vsnip#available"](1) == 1 then
+				-- 		feedkey("<Plug>(vsnip-expand-or-jump)", "")
+				-- 	elseif has_words_before() then
+				-- 		cmp.complete()
+				-- 	else
+				-- 		fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+				-- 	end
+				-- end, { "i", "s" }),
+				-- ["<S-Tab>"] = cmp.mapping(function()
+				-- 	if cmp.visible() then
+				-- 		cmp.select_prev_item()
+				-- 	elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+				-- 		feedkey("<Plug>(vsnip-jump-prev)", "")
+				-- 	end
+				-- end, { "i", "s" }),
 			}),
 			window = {
 				completion = cmp.config.window.bordered(),
@@ -173,8 +188,8 @@ return {
 				{ name = 'nvim_lsp' },
 				{ name = 'nvim_lsp_signature_help' },
 				{ name = 'buffer' },
-				{ name = 'vsnip' },
-				{ name = 'luasnip' },
+				-- { name = 'vsnip' },
+				-- { name = 'luasnip' },
 				{ name = 'path' },
 				{ name = 'nvim_lua' },
 			}),

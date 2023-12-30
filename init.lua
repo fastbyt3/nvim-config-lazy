@@ -80,6 +80,13 @@ vim.keymap.set('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Previou
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<NOP>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<ESC>', ':noh<CR>', { silent = true })
 
+-- paste without overwriting register
+vim.keymap.set("x", "<leader>p", [["_dP]])
+
+-- cpy to system register
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+
 -- remap quit and write to use leader key
 -- vim.api.nvim_set_keymap('n', ',qq', ':q<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', ',ww', ':w<CR>', { noremap = true, silent = true })
