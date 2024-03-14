@@ -41,9 +41,9 @@ opt.ttyfast = true -- faster redrawing
 
 -- Tab control
 opt.smarttab = true -- tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-opt.tabstop = 4 -- the visible width of tabs
-opt.softtabstop = 4 -- edit as if the tabs are 4 characters wide
-opt.shiftwidth = 4 -- number of spaces to use for indent and unindent
+opt.tabstop = 2 -- the visible width of tabs
+opt.softtabstop = 2 -- edit as if the tabs are 4 characters wide
+opt.shiftwidth = 2 -- number of spaces to use for indent and unindent
 opt.shiftround = true -- round indent to a multiple of 'shiftwidth'
 
 -- highlight current line number alone
@@ -52,12 +52,12 @@ opt.cursorlineopt="number"
 
 -- Ruler(120 chars) except for md
 _G.setup_vertical_ruler = function()
-    local filetype = vim.bo.filetype
-    if filetype ~= 'markdown' then
-        cmd('setlocal colorcolumn=120')
-    else
-        cmd('setlocal colorcolumn=')
-    end
+	local filetype = vim.bo.filetype
+	if filetype ~= 'markdown' then
+		cmd('setlocal colorcolumn=120')
+	else
+		cmd('setlocal colorcolumn=')
+	end
 end
 
 cmd('autocmd BufEnter * lua setup_vertical_ruler()')
@@ -66,8 +66,9 @@ setup_vertical_ruler()
 -- Mappings
 g.mapleader = ","
 
+vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true }) -- jump half page down
 vim.api.nvim_set_keymap('n', '<C-f>', '<C-d>', { noremap = true, silent = true }) -- jump half page down
-vim.api.nvim_set_keymap('n', '<C-b>', '<C-u>', { noremap = true, silent = true }) -- jump half page up
+vim.api.nvim_set_keymap('n', '<C-b>', '<C-u>zz', { noremap = true, silent = true }) -- jump half page up
 
 -- Inc / Dec search
 vim.keymap.set('n', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
@@ -84,11 +85,23 @@ vim.keymap.set({ 'n', 'v' }, '<ESC>', ':noh<CR>', { silent = true })
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- cpy to system register
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({"n", "v"}, "<leader>y", '"+y')
+vim.keymap.set("n", "<leader>Y", '"+Y')
 
 -- remap quit and write to use leader key
 -- vim.api.nvim_set_keymap('n', ',qq', ':q<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', ',ww', ':w<CR>', { noremap = true, silent = true })
 
 require("lazypkg")
+
+-- neovide configuration
+if vim.g.neovide then
+	local keymapOpts = {
+		silent = true,
+		noremap = true,
+	}
+
+	vim.keymap.set({ 'n', 'v' }, '<C-c>', '"+y', keymapOpts)
+	vim.keymap.set({ 'n', 'v' }, '<C-v>', '<c-r>+', keymapOpts)
+
+end

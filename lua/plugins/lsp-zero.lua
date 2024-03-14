@@ -3,9 +3,9 @@ return {
 	branch = 'v2.x',
 	dependencies = {
 		-- LSP Support
-		{'neovim/nvim-lspconfig'},             -- Required
-		{'williamboman/mason.nvim'},           -- Optional
-		{'williamboman/mason-lspconfig.nvim'}, -- Optional
+		{ 'neovim/nvim-lspconfig' },         -- Required
+		{ 'williamboman/mason.nvim' },       -- Optional
+		{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
 		-- Autocompletion
 		{
@@ -23,8 +23,7 @@ return {
 				-- "rafamadriz/friendly-snippets",
 			},
 		},
-		-- {'L3MON4D3/LuaSnip'},     -- Required
-		{'simrat39/rust-tools.nvim'},          -- Required for rust
+		{ 'L3MON4D3/LuaSnip' }, -- Required
 	},
 	config = function()
 		local lsp = require('lsp-zero')
@@ -33,14 +32,14 @@ return {
 		lsp.on_attach(function(client, bufnr)
 			-- see :help lsp-zero-keybindings
 			-- to learn the available actions
-			lsp.default_keymaps({buffer = bufnr})
-			local opts = {buffer = bufnr, remap = false}
+			lsp.default_keymaps({ buffer = bufnr })
+			local opts = { buffer = bufnr, remap = false }
 			vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
 			vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
 			vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 		end)
 
-		lsp.skip_server_setup({'rust_analyzer'})
+		lsp.skip_server_setup({ 'rust_analyzer' })
 
 		lsp.setup()
 
@@ -67,52 +66,26 @@ return {
 		-- }
 
 		-- Go
-		require'lspconfig'.gopls.setup{
+		require 'lspconfig'.gopls.setup {
 			on_attach = function(_, bufnr)
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, {buffer=bufnr})
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr })
 			end
 		}
 
-		-- rust
-		local rust_tools = require('rust-tools')
+		local keymapOpts = { silent = true, noremap = true }
+		vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", keymapOpts)
 
-		rust_tools.setup({
-			server = {
-				on_attach = function(_, bufnr)
-					vim.keymap.set('n', '<leader>ca', rust_tools.hover_actions.hover_actions, {buffer = bufnr})
-				end
-			},
-			-- options same as lsp hover / vim.lsp.util.open_floating_preview()
-			hover_actions = {
+		-- vim.api.nvim_create_autocmd("BufWritePre", {
+		-- 	group = vim.api.nvim_create_augroup("format_on_save", { clear = true }),
+		-- 	pattern = "*",
+		-- 	desc = "Run LSP formatting on a file on save",
+		-- 	callback = function()
+		-- 		if vim.fn.exists(":Format") > 0 then
+		-- 			vim.cmd.Format()
+		-- 		end
+		-- 	end,
+		-- })
 
-				-- the border that is used for the hover window
-				-- see vim.api.nvim_open_win()
-				border = {
-					{ "╭", "FloatBorder" },
-					{ "─", "FloatBorder" },
-					{ "╮", "FloatBorder" },
-					{ "│", "FloatBorder" },
-					{ "╯", "FloatBorder" },
-					{ "─", "FloatBorder" },
-					{ "╰", "FloatBorder" },
-					{ "│", "FloatBorder" },
-				},
-
-				-- Maximal width of the hover window. Nil means no max.
-				max_width = nil,
-
-				-- Maximal height of the hover window. Nil means no max.
-				max_height = nil,
-
-				-- whether the hover action window gets automatically focused
-				-- default: false
-				auto_focus = false,
-			},
-		})
-		-- rust_tools.inlay_hints.enable() // enable inline hints
-		vim.cmd([[ autocmd BufWritePre *.rs lua vim.lsp.buf.format({async = false }) ]])
-
-		-- setup cmp
 		local cmp = require('cmp')
 
 		-- local has_words_before = function()
@@ -188,10 +161,10 @@ return {
 				{ name = 'nvim_lsp' },
 				{ name = 'nvim_lsp_signature_help' },
 				{ name = 'buffer' },
-				-- { name = 'vsnip' },
-				-- { name = 'luasnip' },
+				{ name = 'luasnip' },
 				{ name = 'path' },
 				{ name = 'nvim_lua' },
+				{ name = "crates" },
 			}),
 			experimental = {
 				ghost_text = true
@@ -199,3 +172,4 @@ return {
 		})
 	end
 }
+

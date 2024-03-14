@@ -55,6 +55,17 @@ return {
 		lazy = true,
 		event = "VeryLazy",
 	},
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
+	},
+	{
+		"rebelot/kanagawa.nvim",
+		lazy = true,
+		event = "VeryLazy",
+	},
 	-- {
 	-- 	"glepnir/zephyr-nvim",
 	-- 	name = "zephyr",
