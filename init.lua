@@ -66,7 +66,7 @@ setup_vertical_ruler()
 -- Mappings
 g.mapleader = ","
 
-vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true }) -- jump half page down
+vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true, desc = "Go down half a page and set line to middle" }) -- jump half page down
 vim.api.nvim_set_keymap('n', '<C-f>', '<C-d>', { noremap = true, silent = true }) -- jump half page down
 vim.api.nvim_set_keymap('n', '<C-b>', '<C-u>zz', { noremap = true, silent = true }) -- jump half page up
 
@@ -82,11 +82,12 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<NOP>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<ESC>', ':noh<CR>', { silent = true })
 
 -- paste without overwriting register
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without overwriting register" })
 
 -- cpy to system register
-vim.keymap.set({"n", "v"}, "<leader>y", '"+y')
-vim.keymap.set("n", "<leader>Y", '"+Y')
+vim.keymap.set({"n", "v"}, "<leader>y", '"+y', { desc = "Copy to system register" })
+vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Copy curr line to system register" })
+
 
 -- remap quit and write to use leader key
 -- vim.api.nvim_set_keymap('n', ',qq', ':q<CR>', { noremap = true, silent = true })

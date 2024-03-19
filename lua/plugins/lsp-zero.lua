@@ -33,10 +33,9 @@ return {
 			-- see :help lsp-zero-keybindings
 			-- to learn the available actions
 			lsp.default_keymaps({ buffer = bufnr })
-			local opts = { buffer = bufnr, remap = false }
-			vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
-			vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-			vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+			vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, { buffer = bufnr, remap = false, desc = "LSP Rename" })
+			vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, { buffer = bufnr, remap = false, desc = "Code actions" })
+			vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, { buffer = bufnr, remap = false, desc = "signature help" })
 		end)
 
 		lsp.skip_server_setup({ 'rust_analyzer' })
@@ -72,8 +71,7 @@ return {
 			end
 		}
 
-		local keymapOpts = { silent = true, noremap = true }
-		vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", keymapOpts)
+		vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { silent = true, noremap = true, desc = "Format document" })
 
 		-- vim.api.nvim_create_autocmd("BufWritePre", {
 		-- 	group = vim.api.nvim_create_augroup("format_on_save", { clear = true }),
