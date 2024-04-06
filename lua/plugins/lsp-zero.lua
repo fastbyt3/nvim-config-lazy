@@ -3,8 +3,8 @@ return {
 	branch = 'v2.x',
 	dependencies = {
 		-- LSP Support
-		{ 'neovim/nvim-lspconfig' },         -- Required
-		{ 'williamboman/mason.nvim' },       -- Optional
+		{ 'neovim/nvim-lspconfig' },           -- Required
+		{ 'williamboman/mason.nvim' },         -- Optional
 		{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
 		-- Autocompletion
@@ -33,9 +33,12 @@ return {
 			-- see :help lsp-zero-keybindings
 			-- to learn the available actions
 			lsp.default_keymaps({ buffer = bufnr })
-			vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, { buffer = bufnr, remap = false, desc = "LSP Rename" })
-			vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, { buffer = bufnr, remap = false, desc = "Code actions" })
-			vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, { buffer = bufnr, remap = false, desc = "signature help" })
+			vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end,
+				{ buffer = bufnr, remap = false, desc = "LSP Rename" })
+			vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end,
+				{ buffer = bufnr, remap = false, desc = "Code actions" })
+			vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end,
+				{ buffer = bufnr, remap = false, desc = "signature help" })
 		end)
 
 		lsp.skip_server_setup({ 'rust_analyzer' })
@@ -43,7 +46,8 @@ return {
 		lsp.setup()
 
 		-- Fix Undefined global 'vim'
-		require('lspconfig').lua_ls.setup({
+		local lspconfig = require('lspconfig')
+		lspconfig.lua_ls.setup({
 			workspace = {
 				preloadFileSize = 1000
 			}
@@ -65,24 +69,27 @@ return {
 		-- }
 
 		-- Go
-		require 'lspconfig'.gopls.setup {
+		lspconfig.gopls.setup {
 			on_attach = function(_, bufnr)
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr })
 			end
 		}
 
-		vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { silent = true, noremap = true, desc = "Format document" })
+		lspconfig.gleam.setup {}
 
-		-- vim.api.nvim_create_autocmd("BufWritePre", {
-		-- 	group = vim.api.nvim_create_augroup("format_on_save", { clear = true }),
-		-- 	pattern = "*",
-		-- 	desc = "Run LSP formatting on a file on save",
-		-- 	callback = function()
-		-- 		if vim.fn.exists(":Format") > 0 then
-		-- 			vim.cmd.Format()
-		-- 		end
-		-- 	end,
-		-- })
+		-- Format on keybinding
+		vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
+			{ silent = true, noremap = true, desc = "Format document" })
+
+		-- Format on save
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = vim.api.nvim_create_augroup("format_on_save", { clear = true }),
+			pattern = "*",
+			desc = "Run LSP formatting on a file on save",
+			callback = function()
+				vim.lsp.buf.format { async = false }
+			end,
+		})
 
 		local cmp = require('cmp')
 
@@ -103,10 +110,10 @@ return {
 				-- 	vim.fn["vsnip#anonymous"](args.body)
 				-- end,
 			},
-			preselect = 'item',
-			completion = {
-				completeopt = 'menu,menuone,noinsert'
-			},
+			-- preselect = 'item',
+			-- completion = {
+			-- 	completeopt = 'menu,menuone,noinsert'
+			-- },
 			mapping = cmp.mapping.preset.insert({
 				['<C-b>'] = cmp.mapping.scroll_docs(-4),
 				['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -164,10 +171,9 @@ return {
 				{ name = 'nvim_lua' },
 				{ name = "crates" },
 			}),
-			experimental = {
-				ghost_text = true
-			}
+			-- experimental = {
+			-- 	ghost_text = true
+			-- }
 		})
 	end
 }
-

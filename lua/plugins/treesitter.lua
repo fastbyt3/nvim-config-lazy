@@ -10,6 +10,16 @@ return {
 		},
 		opts = {
 			auto_install = true,
+			ensure_installed = {
+				"tsx",
+				"javascript",
+				"html",
+				"css",
+				"vue",
+				"json",
+				"json5",
+				"lua",
+			},
 			incremental_selection = {
 				enable = true,
 				keymaps = {
