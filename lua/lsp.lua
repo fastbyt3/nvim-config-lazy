@@ -13,6 +13,8 @@ local on_attach = function(_, bufnr)
 		end
 
 		vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+		vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end,
+				{ buffer = bufnr, remap = false, desc = "signature help" })
 	end
 
 	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')

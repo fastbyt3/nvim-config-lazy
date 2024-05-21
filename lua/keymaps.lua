@@ -46,6 +46,7 @@ nnoremap("n", "<C-b>", "<C-u>zz", silent)
 
 -- Open file explorer
 nnoremap("n", "<leader>ee", ":Neotree toggle <CR>", silent)
+nnoremap("n", "<leader>ef", ":Neotree reveal <CR>", silent)
 
 -- paste without overwriting register
 nnoremap("x", "<leader>p", [["_dP]], { desc = "Paste without overwriting register" })

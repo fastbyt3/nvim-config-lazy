@@ -20,9 +20,48 @@ require('lazy').setup({
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
-		config = function()
-			require("plugin_configs.catppuccin")
-		end
+		opts = {
+			term_colors = true,
+			transparent_background = false,
+			styles = {
+				comments = {},
+				conditionals = {},
+				loops = {},
+				functions = {},
+				keywords = {},
+				strings = {},
+				variables = {},
+				numbers = {},
+				booleans = {},
+				properties = {},
+				types = {},
+			},
+			color_overrides = {
+				mocha = {
+					base = "#000000",
+					mantle = "#000000",
+					crust = "#000000",
+				},
+			},
+			integrations = {
+				telescope = {
+					enabled = true,
+					style = "nvchad",
+				},
+				dropbar = {
+					enabled = true,
+					color_mode = true,
+				},
+			},
+		},
+		-- config = function()
+		-- 	require("plugin_configs.catppuccin")
+		-- end
+	},
+	{
+		'maxmx03/solarized.nvim',
+		lazy = false,
+		priority = 1000,
 	},
 
 	-- Git related plugins
@@ -254,5 +293,21 @@ require('lazy').setup({
 		"RRethy/vim-illuminate",
 		event = { "BufReadPost", "BufAdd", "BufNewFile" },
 		lazy = true,
-	}
+	},
+
+	-- autopairs
+	{
+		"windwp/nvim-autopairs",
+		opts = {
+			fast_wrap = {},
+			disable_filetype = { "TelescopePrompt", "vim" },
+		},
+		config = function(_, opts)
+			require("nvim-autopairs").setup(opts)
+
+			-- setup cmp for autopairs
+			local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+			require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+		end,
+	},
 })
