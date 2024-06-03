@@ -274,6 +274,11 @@ require('lazy').setup({
 		end,
 	},
 
+	-- gleam
+	{
+		"gleam-lang/gleam.vim"
+	},
+
 	-- whichKey
 	{
 		"folke/which-key.nvim",
