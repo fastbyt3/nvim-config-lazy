@@ -41,9 +41,9 @@ opt.ttyfast = true        -- faster redrawing
 
 -- Tab control
 opt.smarttab = true   -- tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-opt.tabstop = 2       -- the visible width of tabs
-opt.softtabstop = 2   -- edit as if the tabs are 4 characters wide
-opt.shiftwidth = 2    -- number of spaces to use for indent and unindent
+opt.tabstop = 4       -- the visible width of tabs
+opt.softtabstop = 4   -- edit as if the tabs are 4 characters wide
+opt.shiftwidth = 4    -- number of spaces to use for indent and unindent
 opt.shiftround = true -- round indent to a multiple of 'shiftwidth'
 
 -- highlight current line number alone
@@ -64,6 +64,43 @@ end
 cmd('autocmd BufEnter * lua setup_vertical_ruler()')
 setup_vertical_ruler()
 ]]
-   --
+--
+
+-- Terraform file recognition
+cmd([[silent! autocmd! filetypedetect BufRead,BufNewFile *.tf]])
+cmd([[autocmd BufRead,BufNewFile *.hcl set filetype=hcl]])
+cmd([[autocmd BufRead,BufNewFile .terraformrc,terraform.rc set filetype=hcl]])
+cmd([[autocmd BufRead,BufNewFile *.tf,*.tfvars set filetype=terraform]])
+cmd([[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json]])
+cmd([[let g:terraform_fmt_on_save=1]])
+cmd([[let g:terraform_align=1]])
+
+-- Add `templ` as filetype
+vim.filetype.add({ extension = { templ = "templ" } })
+
+-- templ format
+vim.api.nvim_create_autocmd({ "BufWritePost" },
+	{                                             -- IDK the docs said to do the format before saving the file, but it only makes the formatter freak out.
+		pattern = { "*.templ" },
+		callback = function()
+			local file_name = vim.api.nvim_buf_get_name(0) -- Get file name of file in current buffer
+			vim.cmd(":silent !templ fmt " .. file_name)
+
+			local bufnr = vim.api.nvim_get_current_buf()
+			if vim.api.nvim_get_current_buf() == bufnr then
+				vim.cmd('e!')
+			end
+		end
+	})
+
+-- Go format on save
+local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+   require('go.format').gofmt()
+  end,
+  group = format_sync_grp,
+})
 
 g.mapleader = ","

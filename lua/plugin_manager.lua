@@ -54,12 +54,30 @@ require('lazy').setup({
 				},
 			},
 		},
-		-- config = function()
-		-- 	require("plugin_configs.catppuccin")
-		-- end
+		config = function()
+			require("plugin_configs.catppuccin")
+		end
 	},
 	{
 		'maxmx03/solarized.nvim',
+		lazy = false,
+		priority = 1000,
+	},
+	{
+		'ayu-theme/ayu-vim',
+	},
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
+	},
+	{
+		'rebelot/kanagawa.nvim',
+	},
+	{ 'sainnhe/gruvbox-material' },
+	{
+		"scottmckendry/cyberdream.nvim",
 		lazy = false,
 		priority = 1000,
 	},
@@ -178,6 +196,7 @@ require('lazy').setup({
 	{
 		'lukas-reineke/indent-blankline.nvim',
 		main = 'ibl',
+		lazy = true,
 		opts = {},
 		config = function()
 			require("ibl").setup()
@@ -256,6 +275,11 @@ require('lazy').setup({
 		}
 	},
 
+	-- Undotree
+	{
+		'mbbill/undotree'
+	},
+
 	-- Rust
 	-- {
 	-- 	'mrcjkb/rustaceanvim',
@@ -315,4 +339,38 @@ require('lazy').setup({
 			require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
 		end,
 	},
+
+	-- golang
+	{
+		"ray-x/go.nvim",
+		dependencies = { -- optional packages
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("go").setup()
+		end,
+		event = { "CmdlineEnter" },
+		ft = { "go", 'gomod' },
+		build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+	},
+
+	-- foldings
+	{
+		'kevinhwang91/nvim-ufo',
+		dependencies = 'kevinhwang91/promise-async',
+		config = function()
+			require("plugin_configs.ufo")
+		end
+	},
+
+	-- terminal
+	{ 'akinsho/toggleterm.nvim', version = "*", config = true },
+
+	-- terraform
+	{
+		'hashivim/vim-terraform',
+	},
+
 })

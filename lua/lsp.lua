@@ -14,7 +14,7 @@ local on_attach = function(_, bufnr)
 
 		vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
 		vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end,
-				{ buffer = bufnr, remap = false, desc = "signature help" })
+			{ buffer = bufnr, remap = false, desc = "signature help" })
 	end
 
 	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
@@ -62,6 +62,7 @@ local servers = {
 			telemetry = { enable = false },
 		},
 	},
+	terraformls = {},
 }
 
 -- Setup neovim lua configuration
@@ -85,7 +86,23 @@ mason_lspconfig.setup_handlers {
 			on_attach = on_attach,
 			settings = servers[server_name],
 		}
+
+		local lspconfig = require('lspconfig')
+		lspconfig.html.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			filetypes = { "html", "templ" },
+		})
+		lspconfig.htmx.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			filetypes = { "html", "templ" },
+		})
+		lspconfig.tailwindcss.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+			init_options = { userLanguages = { templ = "html" } },
+		})
 	end,
 }
-
-require('lspconfig').gleam.setup({})

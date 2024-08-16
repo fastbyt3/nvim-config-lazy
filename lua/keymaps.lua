@@ -80,3 +80,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Format document
 vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
 	{ silent = true, noremap = true, desc = "Format document" })
+
+-- Open floatterm in float mode
+vim.keymap.set('n', '<C-t>', ":ToggleTerm direction=float<CR>")
