@@ -81,6 +81,9 @@ require('lazy').setup({
 		lazy = false,
 		priority = 1000,
 	},
+	{
+		"loctvl842/monokai-pro.nvim",
+	},
 
 	-- Git related plugins
 	'tpope/vim-fugitive',
@@ -153,6 +156,18 @@ require('lazy').setup({
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		ft = { "markdown" },
+		lazy = true,
+	},
+
+	{
+		"OXY2DEV/markview.nvim",
+		lazy = true,
+		ft = "markdown",
+
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons"
+		}
 	},
 
 	-- Statusline
@@ -371,6 +386,5 @@ require('lazy').setup({
 	-- terraform
 	{
 		'hashivim/vim-terraform',
-	},
-
+	}
 })
