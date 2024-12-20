@@ -4,6 +4,7 @@ require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
 cmp.setup {
+	---@diagnostic disable-next-line: missing-fields
 	formatting = {
 		fields = { "abbr", "menu", "kind" },
 		format = function(entry, item)
@@ -22,7 +23,7 @@ cmp.setup {
 			-- fixed_width = 20
 
 			-- Set 'fixed_width' to false if not provided.
-			fixed_width = fixed_width or false
+			local fixed_width = fixed_width or false
 
 			-- Get the completion entry text shown in the completion window.
 			local content = item.abbr

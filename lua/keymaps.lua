@@ -55,21 +55,21 @@ nnoremap("x", "<leader>p", [["_dP]], { desc = "Paste without overwriting registe
 nnoremap({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system register" })
 nnoremap("n", "<leader>Y", '"+Y', { desc = "Copy curr line to system register" })
 
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<C-p>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
+nnoremap('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+nnoremap('n', '<C-p>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+nnoremap('n', '<leader>/', function()
 	-- You can pass additional configuration to telescope to change theme, layout, etc.
-	require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+	require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
 		winblend = 10,
 		previewer = false,
 	})
 end, { desc = '[/] Fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>fw', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>xx', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+nnoremap('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+nnoremap('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+nnoremap('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+nnoremap('n', '<leader>fw', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+nnoremap('n', '<leader>xx', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = 'Go to previous diagnostic message' })

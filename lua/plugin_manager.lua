@@ -84,6 +84,7 @@ require('lazy').setup({
 	{
 		"loctvl842/monokai-pro.nvim",
 	},
+	{ "EdenEast/nightfox.nvim" },
 
 	-- Git related plugins
 	'tpope/vim-fugitive',
@@ -159,15 +160,25 @@ require('lazy').setup({
 		lazy = true,
 	},
 
-	{
-		"OXY2DEV/markview.nvim",
-		lazy = true,
-		ft = "markdown",
+	-- {
+	-- 	"OXY2DEV/markview.nvim",
+	-- 	lazy = true,
+	-- 	ft = "markdown",
+	--
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"nvim-tree/nvim-web-devicons"
+	-- 	}
+	-- },
 
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons"
-		}
+	{
+		'MeanderingProgrammer/render-markdown.nvim',
+		dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		opts = {},
 	},
 
 	-- Statusline
@@ -208,15 +219,16 @@ require('lazy').setup({
 	},
 
 	-- Add indentation guides even on blank lines
-	{
-		'lukas-reineke/indent-blankline.nvim',
-		main = 'ibl',
-		lazy = true,
-		opts = {},
-		config = function()
-			require("ibl").setup()
-		end
-	},
+	-- Using mini nvim indent plugin
+	-- {
+	-- 	'lukas-reineke/indent-blankline.nvim',
+	-- 	main = 'ibl',
+	-- 	lazy = true,
+	-- 	opts = {},
+	-- 	config = function()
+	-- 		require("ibl").setup()
+	-- 	end
+	-- },
 
 	-- LSP Configuration & Plugins
 	{
@@ -254,6 +266,17 @@ require('lazy').setup({
 			require("plugin_configs.cmp")
 		end
 	},
+	-- {
+	-- 	'saghen/blink.cmp',
+	-- 	version = 'v0.*',
+	-- 	-- !Important! Make sure you're using the latest release of LuaSnip
+	-- 	-- `main` does not work at the moment
+	-- 	dependencies = { 'L3MON4D3/LuaSnip', version = 'v2.*' },
+	-- 	config = function()
+	-- 		require("plugin_configs.cmp")
+	-- 	end
+	-- },
+
 
 	-- Treesitter
 	{
@@ -386,5 +409,28 @@ require('lazy').setup({
 	-- terraform
 	{
 		'hashivim/vim-terraform',
+		ft = { "tf" }
+	},
+
+	-- Spectre
+	-- search and replace in curr project
+	{
+		'nvim-pack/nvim-spectre',
+		lazy = true
+	},
+
+	{
+		'echasnovski/mini.nvim',
+		version = false,
+		config = function()
+			require("plugin_configs.mini")
+		end
+	},
+
+	{
+		'stevearc/conform.nvim',
+		config = function()
+			require("plugin_configs.conform")
+		end
 	}
 })

@@ -80,7 +80,7 @@ vim.filetype.add({ extension = { templ = "templ" } })
 
 -- templ format
 vim.api.nvim_create_autocmd({ "BufWritePost" },
-	{                                             -- IDK the docs said to do the format before saving the file, but it only makes the formatter freak out.
+	{ -- IDK the docs said to do the format before saving the file, but it only makes the formatter freak out.
 		pattern = { "*.templ" },
 		callback = function()
 			local file_name = vim.api.nvim_buf_get_name(0) -- Get file name of file in current buffer
@@ -94,13 +94,36 @@ vim.api.nvim_create_autocmd({ "BufWritePost" },
 	})
 
 -- Go format on save
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
-  callback = function()
-   require('go.format').gofmt()
-  end,
-  group = format_sync_grp,
-})
+-- local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+-- 	pattern = "*.go",
+-- 	callback = function()
+-- 		require('go.format').gofmt()
+-- 	end,
+-- 	group = format_sync_grp,
+-- })
+
+-- vim.api.nvim_create_autocmd("LspAttach", {
+-- 	callback = function(args)
+-- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
+-- 		if not client then return end
+--
+-- 		local callbackFn = nil
+--
+-- 		if vim.bo.filetype == 'go' then
+-- 			callbackFn = require('go.format').gofmt
+-- 		elseif client.supports_method("textDocument/formatting") then
+-- 			callbackFn = function()
+-- 				vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+-- 			end
+-- 		end
+-- 		if callbackFn then
+-- 			vim.api.nvim_create_autocmd('BufWritePre', {
+-- 				buffer = args.buf,
+-- 				callback = callbackFn,
+-- 			})
+-- 		end
+-- 	end
+-- })
 
 g.mapleader = ","
