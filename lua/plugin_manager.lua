@@ -60,7 +60,7 @@ require('lazy').setup({
 	},
 	{
 		'maxmx03/solarized.nvim',
-		lazy = false,
+		event = "VeryLazy",
 		priority = 1000,
 	},
 	{
@@ -68,7 +68,7 @@ require('lazy').setup({
 	},
 	{
 		"folke/tokyonight.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		priority = 1000,
 		opts = {},
 	},
@@ -78,7 +78,7 @@ require('lazy').setup({
 	{ 'sainnhe/gruvbox-material' },
 	{
 		"scottmckendry/cyberdream.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		priority = 1000,
 	},
 	{
@@ -373,8 +373,8 @@ require('lazy').setup({
 			require("nvim-autopairs").setup(opts)
 
 			-- setup cmp for autopairs
-			local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-			require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+			-- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+			-- require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
 		end,
 	},
 
@@ -388,6 +388,7 @@ require('lazy').setup({
 		},
 		config = function()
 			require("go").setup()
+			vim.keymap.set('n', ',ife', "<cmd>GoIfErr<CR>", { desc = 'Insert "if err" snippet' })
 		end,
 		event = { "CmdlineEnter" },
 		ft = { "go", 'gomod' },
@@ -404,7 +405,12 @@ require('lazy').setup({
 	},
 
 	-- terminal
-	{ 'akinsho/toggleterm.nvim', version = "*", config = true },
+	{
+		'akinsho/toggleterm.nvim',
+		event = "VeryLazy",
+		version = "*",
+		config = true
+	},
 
 	-- terraform
 	{
@@ -432,5 +438,32 @@ require('lazy').setup({
 		config = function()
 			require("plugin_configs.conform")
 		end
-	}
+	},
+
+	{
+		'windwp/nvim-ts-autotag',
+		config = function()
+			require('nvim-ts-autotag').setup()
+		end
+	},
+
+	{
+		"github/copilot.vim",
+		event = "InsertEnter",
+		lazy = false,
+		autoStart = true,
+		config = function()
+			vim.g.copilot_assume_mapped = true
+			vim.api.nvim_set_keymap("i", "<C-CR>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+			vim.g.copilot_no_tab_map = true
+		end,
+	},
+
+	{
+		'fei6409/log-highlight.nvim',
+		event = "BufRead *.log",
+		config = function()
+			require('log-highlight').setup {}
+		end,
+	},
 })

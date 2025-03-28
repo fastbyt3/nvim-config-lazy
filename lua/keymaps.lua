@@ -55,6 +55,7 @@ nnoremap("x", "<leader>p", [["_dP]], { desc = "Paste without overwriting registe
 nnoremap({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system register" })
 nnoremap("n", "<leader>Y", '"+Y', { desc = "Copy curr line to system register" })
 
+-- Telescope keymaps
 nnoremap('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 nnoremap('n', '<C-p>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 nnoremap('n', '<leader>/', function()
@@ -71,6 +72,13 @@ nnoremap('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S
 nnoremap('n', '<leader>fw', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 nnoremap('n', '<leader>xx', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
+nnoremap('v', '<leader>fw', require('telescope.builtin').grep_string)
+
+-- nnoremap('v', '<leader>fw', function()
+-- 	local to_search = vim.getVisualSelection()
+-- 	require("telescope.builtin").grep_string
+-- end)
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = 'Go to next diagnostic message' })
@@ -83,3 +91,7 @@ vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<c
 
 -- Open floatterm in float mode
 vim.keymap.set('n', '<C-t>', ":ToggleTerm direction=float<CR>")
+
+-- Quickfix
+nnoremap('n', '<leader>cn', ':cnext<CR>')
+nnoremap('n', '<leader>cp', ':cprev<CR>')

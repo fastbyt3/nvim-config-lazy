@@ -13,12 +13,11 @@ local on_attach = function(_, bufnr)
 		end
 
 		vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-		vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end,
-			{ buffer = bufnr, remap = false, desc = "signature help" })
 	end
-
 	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+	nmap('<leader>cl', vim.lsp.codelens.run, '[C]ode [L]ens')
+	nmap('<leader>cL', vim.lsp.codelens.refresh, '[C]ode [R]efresh')
 
 	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
 	nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -38,6 +37,9 @@ local on_attach = function(_, bufnr)
 	--nmap('<leader>wl', function()
 	--print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	--end, '[W]orkspace [L]ist Folders')
+
+	vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help,
+		{ buffer = bufnr, remap = false, desc = "signature help" })
 
 	-- Create a command `:Format` local to the LSP buffer
 	vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -61,27 +63,28 @@ local servers = {
 			telemetry = { enable = false },
 		},
 	},
+	ts_ls = {},
 	terraformls = {},
-	intelephense = {
-		intelephense = {
-			-- Add wordpress to the list of stubs
-			stubs = {
-				"apache", "bcmath", "bz2", "calendar", "com_dotnet", "Core", "ctype", "curl", "date",
-				"dba", "dom", "enchant", "exif", "FFI", "fileinfo", "filter", "fpm", "ftp", "gd", "gettext",
-				"gmp", "hash", "iconv", "imap", "intl", "json", "ldap", "libxml", "mbstring", "meta", "mysqli",
-				"oci8", "odbc", "openssl", "pcntl", "pcre", "PDO", "pdo_ibm", "pdo_mysql", "pdo_pgsql", "pdo_sqlite",
-				"pgsql",
-				"Phar", "posix", "pspell", "readline", "Reflection", "session", "shmop", "SimpleXML", "snmp", "soap",
-				"sockets", "sodium", "SPL", "sqlite3", "standard", "superglobals", "sysvmsg", "sysvsem", "sysvshm",
-				"tidy",
-				"tokenizer", "xml", "xmlreader", "xmlrpc", "xmlwriter", "xsl", "Zend OPcache", "zip", "zlib",
-				"wordpress", "phpunit",
-			},
-			diagnostics = {
-				enable = true,
-			},
-		},
-	},
+	-- intelephense = {
+	-- 	intelephense = {
+	-- 		-- Add wordpress to the list of stubs
+	-- 		stubs = {
+	-- 			"apache", "bcmath", "bz2", "calendar", "com_dotnet", "Core", "ctype", "curl", "date",
+	-- 			"dba", "dom", "enchant", "exif", "FFI", "fileinfo", "filter", "fpm", "ftp", "gd", "gettext",
+	-- 			"gmp", "hash", "iconv", "imap", "intl", "json", "ldap", "libxml", "mbstring", "meta", "mysqli",
+	-- 			"oci8", "odbc", "openssl", "pcntl", "pcre", "PDO", "pdo_ibm", "pdo_mysql", "pdo_pgsql", "pdo_sqlite",
+	-- 			"pgsql",
+	-- 			"Phar", "posix", "pspell", "readline", "Reflection", "session", "shmop", "SimpleXML", "snmp", "soap",
+	-- 			"sockets", "sodium", "SPL", "sqlite3", "standard", "superglobals", "sysvmsg", "sysvsem", "sysvshm",
+	-- 			"tidy",
+	-- 			"tokenizer", "xml", "xmlreader", "xmlrpc", "xmlwriter", "xsl", "Zend OPcache", "zip", "zlib",
+	-- 			"wordpress", "phpunit",
+	-- 		},
+	-- 		diagnostics = {
+	-- 			enable = true,
+	-- 		},
+	-- 	},
+	-- },
 }
 
 -- Setup neovim lua configuration
@@ -94,6 +97,7 @@ capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true
 }
+-- local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'

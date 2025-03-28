@@ -28,3 +28,5 @@ require('mini.notify').setup()
 
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
 require('mini.move').setup()
+
+require('mini.surround').setup()

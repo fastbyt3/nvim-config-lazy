@@ -3,4 +3,4 @@ require("plugin_manager")
 require("keymaps")
 require("lsp")
 require("colors")
-
+require("snippets")
