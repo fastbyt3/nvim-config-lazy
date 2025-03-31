@@ -1,97 +1,55 @@
-local nnoremap = vim.keymap.set
-local silent = { silent = true }
+local map = vim.keymap.set
+-- local utils = require("utils")
 
--- Make ctrl-c behave like esc
--- nnoremap("!", "<C-c>", "<Esc>", silent)
--- nnoremap("n", "<C-c>", "<silent> <C-c>")
+map("n", "<C-f>", "<C-d>zz", { silent = true })
+map("n", "<C-b>", "<C-u>zz", { silent = true })
 
--- Run macro q
--- nnoremap({ 'n', 'v' }, "<C-q>", ":normal @q <CR>", silent)
+map("n", "gg", "ggzz", { desc = "Go to beginning of file and center" })
 
--- Make global marks resume to prev line in buffer
--- nnoremap('n', "'M", "'M'\"zz")
--- nnoremap('n', "'N", "'N'\"zz")
--- nnoremap('n', "'J", "'J'\"zz")
--- nnoremap('n', "'K", "'K'\"zz")
--- nnoremap('n', "'L", "'L'\"zz")
--- nnoremap('n', "'H", "'H'\"zz")
+map("n", "G", "Gzz", { desc = "Go to end of file and center" })
+map("x", "<leader>p", [["_dP]], { desc = "Paste without overwriting register" })
 
-nnoremap("n", "<C-f>", "<C-d>zz", silent)
-nnoremap("n", "<C-b>", "<C-u>zz", silent)
+-- Do not include white space characters when using $ in visual mode,
+-- see https://vi.stackexchange.com/q/12607/15292
+map("x", "$", "g_")
 
--- resizing splits
--- local splits = require("smart-splits")
--- nnoremap('n', '<S-h>', splits.resize_left)
--- nnoremap('n', '<S-j>', splits.resize_down)
--- nnoremap('n', '<S-k>', splits.resize_up)
--- nnoremap('n', '<S-l>', splits.resize_right)
+-- Continuous visual shifting (does not exit Visual mode), `gv` means
+-- to reselect previous visual area, see https://superuser.com/q/310417/736190
+map("x", "<", "<gv")
+map("x", ">", ">gv")
 
--- moving between splits
--- nnoremap('n', '<C-h>', splits.move_cursor_left)
--- nnoremap('n', '<C-j>', splits.move_cursor_down)
--- nnoremap('n', '<C-k>', splits.move_cursor_up)
--- nnoremap('n', '<C-l>', splits.move_cursor_right)
-
--- swapping buffers between windows
--- nnoremap('n', '<A-h>', splits.swap_buf_left)
--- nnoremap('n', '<A-j>', splits.swap_buf_down)
--- nnoremap('n', '<A-k>', splits.swap_buf_up)
--- nnoremap('n', '<A-l>', splits.swap_buf_right)
-
--- Fuzzy finding
--- local telescope = require('telescope.builtin')
--- nnoremap('n', '<C-e>', telescope.find_files)
--- nnoremap('n', '<C-g>', telescope.live_grep)
--- nnoremap('n', '<C-f>', telescope.buffers)
-
--- Open file explorer
-nnoremap("n", "<leader>ee", ":Neotree toggle <CR>", silent)
-nnoremap("n", "<leader>ef", ":Neotree reveal <CR>", silent)
-
--- paste without overwriting register
-nnoremap("x", "<leader>p", [["_dP]], { desc = "Paste without overwriting register" })
+-- Use Esc to quit builtin terminal
+map("t", "<Esc>", [[<c-\><c-n>]])
 
 -- cpy to system register
-nnoremap({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system register" })
-nnoremap("n", "<leader>Y", '"+Y', { desc = "Copy curr line to system register" })
-
--- Telescope keymaps
-nnoremap('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-nnoremap('n', '<C-p>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-nnoremap('n', '<leader>/', function()
-	-- You can pass additional configuration to telescope to change theme, layout, etc.
-	require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
-		winblend = 10,
-		previewer = false,
-	})
-end, { desc = '[/] Fuzzily search in current buffer' })
-
-nnoremap('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-nnoremap('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-nnoremap('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-nnoremap('n', '<leader>fw', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-nnoremap('n', '<leader>xx', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-
-nnoremap('v', '<leader>fw', require('telescope.builtin').grep_string)
-
--- nnoremap('v', '<leader>fw', function()
--- 	local to_search = vim.getVisualSelection()
--- 	require("telescope.builtin").grep_string
--- end)
+map({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system register" })
+map("n", "<leader>Y", '"+Y', { desc = "Copy curr line to system register" })
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Go to previous diagnostic message" })
+map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Go to next diagnostic message" })
+-- map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
+map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
--- Format document
-vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
-	{ silent = true, noremap = true, desc = "Format document" })
+-- Format document -> using conform
+-- map(
+-- 	"n",
+-- 	"<leader>lf",
+-- 	"<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
+-- 	{ silent = true, noremap = true, desc = "Format document" }
+-- )
 
--- Open floatterm in float mode
-vim.keymap.set('n', '<C-t>', ":ToggleTerm direction=float<CR>")
+-- Double esc to clear search highlight
+map("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR>", { silent = true })
 
--- Quickfix
-nnoremap('n', '<leader>cn', ':cnext<CR>')
-nnoremap('n', '<leader>cp', ':cprev<CR>')
+-- Search and Replace
+-- 'c.' for word, 'c>' for WORD
+-- 'c.' in visual mode for selection
+map("n", "c.", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], { desc = "search and replace word under cursor" })
+map("n", "c>", [[:%s/\V<C-r><C-a>//g<Left><Left>]], { desc = "search and replace WORD under cursor" })
+map("x", "c.", [[:<C-u>%s/\V<C-r>=luaeval("require'utils'.get_visual_selection(true)")<CR>//g<Left><Left>]], {})
+
+-- Quickfix navigation
+vim.keymap.set("n", "<leader>cn", ":cnext<cr>zz", { desc = "Go to next quickfix item and center" })
+vim.keymap.set("n", "<leader>cp", ":cprevious<cr>zz", { desc = "Go to previous quickfix item and center" })
+vim.keymap.set("n", "<leader>cc", ":cclose<cr>zz", { desc = "Close quickfix list" })

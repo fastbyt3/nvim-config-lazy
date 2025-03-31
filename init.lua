@@ -1,6 +1,6 @@
-require("options")
-require("plugin_manager")
+require("globals")
 require("keymaps")
-require("lsp")
-require("colors")
-require("snippets")
+require("custom-autocmd")
+require("plugins")
+
+vim.cmd.colorscheme("catppuccin-mocha")

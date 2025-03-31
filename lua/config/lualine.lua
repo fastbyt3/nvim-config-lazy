@@ -79,7 +79,7 @@ local function createDiffString()
 end
 
 -- Make a global table
-wordCount = {}
+local wordCount = {}
 -- Now add a function to it for the job needed
 function wordCount.getWords()
 	if vim.bo.filetype == "md" or vim.bo.filetype == "txt" or vim.bo.filetype == "markdown" then
@@ -148,7 +148,8 @@ require("lualine").setup({
 	},
 	sections = {
 		lualine_a = {
-			-- { "mode", fmt = trunc(80, 1, nil, true) },
+			---@diagnostic disable-next-line: param-type-mismatch
+			{ "mode", fmt = trunc(80, 1, nil, true) },
 			{
 				"mode",
 				fmt = function(s)
@@ -235,6 +236,7 @@ require("lualine").setup({
 			},
 		},
 		lualine_x = {
+			---@diagnostic disable-next-line: undefined-global
 			{ place, padding = { left = 1, right = 1 } },
 		},
 		lualine_y = {},
