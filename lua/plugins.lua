@@ -103,10 +103,23 @@ local plugin_specs = {
 		end,
 	},
 	-- -- A list of colorscheme plugin you may want to try. Find what suits you.
-	{ "navarasu/onedark.nvim", lazy = true },
+	{
+		"navarasu/onedark.nvim",
+		lazy = true,
+		opts = {
+			toggle_style_key = "<leader>ts",
+		},
+	},
 	{ "sainnhe/gruvbox-material", lazy = true },
 	{ "sainnhe/everforest", lazy = true },
-	{ "catppuccin/nvim", name = "catppuccin", lazy = true },
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		lazy = true,
+		-- config = function()
+		-- 	require("config.catppuccin_colors")
+		-- end,
+	},
 	{ "rebelot/kanagawa.nvim", lazy = true },
 	{ "nvim-tree/nvim-web-devicons", event = "VeryLazy" },
 
