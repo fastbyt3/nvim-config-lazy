@@ -97,7 +97,7 @@ local keys = {
 	{
 		"<leader>fw",
 		function()
-			require("fzf-lua").grep_cword()
+			require("fzf-lua").grep_visual()
 		end,
 		desc = "Grep word",
 		mode = { "v" },

@@ -38,6 +38,9 @@ local custom_attach = function(client, bufnr)
 	map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "varialbe rename" })
 	map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
 	map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
+	map("n", "<leader>lti", function()
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+	end, { desc = "LSP toggle inlay_hint" })
 
 	-- Set some key bindings conditional on server capabilities
 	-- Commenting it out since using conform with lsp as fallback
@@ -113,7 +116,7 @@ if utils.executable("pyright") then
 	local merged_capability = vim.tbl_deep_extend("force", capabilities, new_capability)
 
 	lspconfig.pyright.setup({
-		cmd = { "delance-langserver", "--stdio" },
+		-- cmd = { "delance-langserver", "--stdio" },
 		on_attach = custom_attach,
 		capabilities = merged_capability,
 		settings = {
