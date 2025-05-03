@@ -29,7 +29,7 @@ local custom_attach = function(client, bufnr)
 
 	map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
 	map("n", "K", function()
-		vim.lsp.buf.hover({ border = "single", max_height = 25 })
+		vim.lsp.buf.hover({ border = "single", max_height = 40 })
 	end)
 	map("n", "gI", vim.lsp.buf.implementation, { desc = "go to implementation" })
 	map({ "n", "i" }, "<C-h>", function()

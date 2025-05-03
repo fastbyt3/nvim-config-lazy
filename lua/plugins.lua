@@ -102,7 +102,7 @@ local plugin_specs = {
 			require("config.fzflua")
 		end,
 	},
-	-- -- A list of colorscheme plugin you may want to try. Find what suits you.
+	-- Colorschemes
 	{
 		"navarasu/onedark.nvim",
 		lazy = true,
@@ -309,11 +309,43 @@ local plugin_specs = {
 		end,
 	},
 
+	-- Rust
+	{
+		"mrcjkb/rustaceanvim",
+		lazy = false,
+	},
+
 	-- lifesaver =)
 	{
 		"mbbill/undotree",
 		event = { "BufReadPost" },
 		lazy = true,
+	},
+
+	-- markdown rendering
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		opts = {
+			-- heading = {
+			-- 	enabled = false,
+			-- 	-- atx = true,
+			-- 	-- setext = true,
+			-- },
+			overrides = { buftype = { ["nofile"] = { enabled = false } } }, -- disables for lsp
+		},
+	},
+
+	-- Grug find! Grug replace! Grug Happy!
+	{
+		"MagicDuck/grug-far.nvim",
+		config = function()
+			require("grug-far").setup({})
+		end,
 	},
 }
 
