@@ -264,6 +264,13 @@ if utils.executable("gopls") then
 	})
 end
 
+if utils.executable("csharp-ls") then
+	lspconfig.csharp_ls.setup({
+		on_attach = custom_attach,
+		settings = {},
+	})
+end
+
 lspconfig.ts_ls.setup({
 	capabilities = capabilities,
 	on_attach = custom_attach,
