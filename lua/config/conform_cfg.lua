@@ -49,3 +49,7 @@ end, {
 	desc = "Disable autoformat-on-save",
 	bang = true,
 })
+
+vim.api.nvim_create_user_command("W", "noautocmd write", {
+	desc = "Write file without triggering autocommands",
+})
