@@ -57,19 +57,54 @@ local plugin_specs = {
 	},
 
 	{
-		"neovim/nvim-lspconfig",
-		event = { "BufRead", "BufNewFile" },
-		config = function()
-			require("config.lsp")
-		end,
+		"williamboman/mason-lspconfig.nvim",
+		opts = {
+			ensure_installed = {
+				"ts_ls",
+				"html",
+				"cssls",
+				"tailwindcss",
+				"lua_ls",
+				"graphql",
+				"emmet_ls",
+				"pyright",
+				"eslint",
+				"ruff",
+				"vim-language-server",
+			},
+		},
+		dependencies = {
+			{
+				"williamboman/mason.nvim",
+				opts = {
+					ui = {
+						icons = {
+							package_installed = "✓",
+							package_pending = "➜",
+							package_uninstalled = "✗",
+						},
+					},
+				},
+			},
+			"neovim/nvim-lspconfig",
+		},
 	},
-
-	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup()
-		end,
-	},
+	-- {
+	--   "WhoIsSethDaniel/mason-tool-installer.nvim",
+	--   opts = {
+	--     ensure_installed = {
+	--       "prettier", -- prettier formatter
+	--       "stylua", -- lua formatter
+	--       "isort", -- python formatter
+	--       "black", -- python formatter
+	--       "pylint",
+	--       "eslint_d",
+	--     },
+	--   },
+	--   dependencies = {
+	--     "williamboman/mason.nvim",
+	--   },
+	-- },
 
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -313,6 +348,16 @@ local plugin_specs = {
 	{
 		"mrcjkb/rustaceanvim",
 		lazy = false,
+	},
+
+	-- Elixir
+	{
+		"elixir-tools/elixir-tools.nvim",
+		version = "*",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
 	},
 
 	-- lifesaver =)
