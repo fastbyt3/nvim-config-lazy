@@ -70,7 +70,6 @@ local plugin_specs = {
 				"pyright",
 				"eslint",
 				"ruff",
-				"vim-language-server",
 			},
 		},
 		dependencies = {

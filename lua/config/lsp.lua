@@ -28,6 +28,17 @@ local custom_attach = function(client, bufnr)
 	end
 
 	map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
+	map("n", "<leader>gdv", function()
+		vim.cmd("vsplit")
+		vim.lsp.buf.definition({
+			on_list = function(options)
+				-- This callback runs after the definition is found
+				vim.schedule(function()
+					vim.cmd("cclose")
+				end)
+			end,
+		})
+	end, { desc = "open definition in vertical split" })
 	map("n", "K", function()
 		vim.lsp.buf.hover({ border = "single", max_height = 40 })
 	end)
@@ -115,7 +126,7 @@ if utils.executable("pyright") then
 	}
 	local merged_capability = vim.tbl_deep_extend("force", capabilities, new_capability)
 
-	lspconfig.pyright.setup({
+	vim.lsp.config("pyright", {
 		-- cmd = { "delance-langserver", "--stdio" },
 		on_attach = custom_attach,
 		capabilities = merged_capability,
@@ -146,12 +157,14 @@ if utils.executable("pyright") then
 			},
 		},
 	})
+
+	vim.lsp.enable("pyright")
 else
 	vim.notify("pyright not found!", vim.log.levels.WARN, { title = "Nvim-config" })
 end
 
 if utils.executable("ruff") then
-	require("lspconfig").ruff.setup({
+	vim.lsp.config("ruff", {
 		on_attach = custom_attach,
 		capabilities = capabilities,
 		init_options = {
@@ -161,6 +174,7 @@ if utils.executable("ruff") then
 			},
 		},
 	})
+	vim.lsp.enable("ruff")
 end
 
 -- Disable ruff hover feature in favor of Pyright
@@ -181,7 +195,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 if utils.executable("ltex-ls") then
-	lspconfig.ltex.setup({
+	vim.lsp.config("ltex", {
 		on_attach = custom_attach,
 		cmd = { "ltex-ls" },
 		filetypes = { "text", "plaintex", "tex", "markdown" },
@@ -192,10 +206,11 @@ if utils.executable("ltex-ls") then
 		},
 		flags = { debounce_text_changes = 300 },
 	})
+	vim.lsp.enable("ltex")
 end
 
 if utils.executable("clangd") then
-	lspconfig.clangd.setup({
+	vim.lsp.config("clangd", {
 		on_attach = custom_attach,
 		capabilities = capabilities,
 		filetypes = { "c", "cpp", "cc" },
@@ -203,32 +218,35 @@ if utils.executable("clangd") then
 			debounce_text_changes = 500,
 		},
 	})
+	vim.lsp.enable("clangd")
 end
 
 -- set up vim-language-server
 if utils.executable("vim-language-server") then
-	lspconfig.vimls.setup({
+	vim.lsp.config("vimls", {
 		on_attach = custom_attach,
 		flags = {
 			debounce_text_changes = 500,
 		},
 		capabilities = capabilities,
 	})
+	vim.lsp.enable("vimls")
 else
 	vim.notify("vim-language-server not found!", vim.log.levels.WARN, { title = "Nvim-config" })
 end
 
 -- set up bash-language-server
 if utils.executable("bash-language-server") then
-	lspconfig.bashls.setup({
+	vim.lsp.config("bashls", {
 		on_attach = custom_attach,
 		capabilities = capabilities,
 	})
+	vim.lsp.enable("bashls")
 end
 
 -- settings for lua-language-server can be found on https://luals.github.io/wiki/settings/
 if utils.executable("lua-language-server") then
-	lspconfig.lua_ls.setup({
+	vim.lsp.config("lua_ls", {
 		on_attach = custom_attach,
 		settings = {
 			Lua = {
@@ -243,10 +261,11 @@ if utils.executable("lua-language-server") then
 		},
 		capabilities = capabilities,
 	})
+	vim.lsp.enable("lua_ls")
 end
 
 if utils.executable("gopls") then
-	lspconfig.gopls.setup({
+	vim.lsp.config("gopls", {
 		on_attach = custom_attach,
 		settings = {
 			gopls = {
@@ -262,13 +281,23 @@ if utils.executable("gopls") then
 			},
 		},
 	})
+	vim.lsp.enable("gopls")
 end
 
 if utils.executable("csharp-ls") then
-	lspconfig.csharp_ls.setup({
+	vim.lsp.config("csharp_ls", {
 		on_attach = custom_attach,
 		settings = {},
 	})
+	vim.lsp.enable("csharp_ls")
+end
+
+if utils.executable("ruby-lsp") then
+	vim.lsp.config("ruby_lsp", {})
+end
+
+if utils.executable("solargraph") then
+	vim.lsp.config("solargraph", {})
 end
 
 lspconfig.ts_ls.setup({
@@ -307,6 +336,29 @@ lspconfig.ts_ls.setup({
 				includeInlayEnumMemberValueHints = true,
 			},
 		},
+	},
+})
+
+local elixir = require("elixir")
+local elixirls = require("elixir.elixirls")
+
+elixir.setup({
+	nextls = { enable = true },
+	elixirls = {
+		enable = true,
+		settings = elixirls.settings({
+			dialyzerEnabled = false,
+			enableTestLenses = false,
+		}),
+		on_attach = function(client, bufnr)
+			custom_attach(client, bufnr)
+			vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+			vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+			vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+		end,
+	},
+	projectionist = {
+		enable = true,
 	},
 })
 

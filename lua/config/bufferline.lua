@@ -17,7 +17,15 @@ require("bufferline").setup({
 		max_name_length = 18,
 		max_prefix_length = 15,
 		tab_size = 10,
-		diagnostics = false,
+		diagnostics = "nvim_lsp",
+		-- diagnostics_indicator = function(count, level, diagnostics_dict, context)
+		-- 	local s = " "
+		-- 	for e, n in pairs(diagnostics_dict) do
+		-- 		local sym = e == "error" and " " or (e == "warning" and " " or " ")
+		-- 		s = s .. n .. sym
+		-- 	end
+		-- 	return s
+		-- end,
 		custom_filter = function(bufnr)
 			-- if the result is false, this buffer will be shown, otherwise, this
 			-- buffer will be hidden.
@@ -33,7 +41,7 @@ require("bufferline").setup({
 
 			return true
 		end,
-		show_buffer_icons = false,
+		show_buffer_icons = true,
 		show_buffer_close_icons = true,
 		show_close_icon = true,
 		show_tab_indicators = true,
