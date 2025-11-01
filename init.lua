@@ -2,6 +2,7 @@ require("globals")
 require("keymaps")
 require("custom-autocmd")
 require("plugins")
+require("lsp")
 
 vim.cmd.colorscheme("everforest")
 -- set this for everforest to have the lsp signature highlight current arg in readable color

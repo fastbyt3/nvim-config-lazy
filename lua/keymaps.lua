@@ -26,10 +26,10 @@ map({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system register" })
 map("n", "<leader>Y", '"+Y', { desc = "Copy curr line to system register" })
 
 -- Diagnostic keymaps
-map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Go to previous diagnostic message" })
-map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Go to next diagnostic message" })
+-- map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Go to previous diagnostic message" })
+-- map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Go to next diagnostic message" })
 -- map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+-- map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 -- Format document -> using conform
 -- map(

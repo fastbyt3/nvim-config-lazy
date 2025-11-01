@@ -48,7 +48,7 @@ local keys = {
 	-- { "<leader>fh", function() require "fzf-lua".oldfiles({ cwd = vim.uv.cwd(), cwd_header = true, cwd_only = true }) end, desc = "Oldfiles (cwd)" },
 	-- git
 	{
-		"<leader>gf",
+		"<leader>lgf",
 		function()
 			require("fzf-lua").git_files()
 		end,
@@ -56,21 +56,21 @@ local keys = {
 	},
 	-- { "<leader>gB", function() require "fzf-lua".git_branches() end, desc = "Git Branches" },
 	{
-		"<leader>gc",
+		"<leader>lgc",
 		function()
 			require("fzf-lua").git_bcommits()
 		end,
 		desc = "Git Log",
 	},
 	{
-		"<leader>gC",
+		"<leader>lgC",
 		function()
 			require("fzf-lua").git_commits()
 		end,
 		desc = "Git Log",
 	},
 	{
-		"<leader>gs",
+		"<leader>lgs",
 		function()
 			require("fzf-lua").git_status()
 		end,
@@ -89,7 +89,7 @@ local keys = {
 	{
 		"<leader>fw",
 		function()
-			require("fzf-lua").live_grep_glob()
+			require("fzf-lua").live_grep()
 		end,
 		desc = "Grep",
 	},

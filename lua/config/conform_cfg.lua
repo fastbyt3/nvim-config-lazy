@@ -9,6 +9,7 @@ require("conform").setup({
 		json = { "prettier", "prettierd", stop_after_first = true },
 		javascript = { "prettier", "prettierd", stop_after_first = true },
 		go = { "goimports", "gofmt" },
+		terraform = { "terraform_fmt" },
 	},
 	format_on_save = function(bufnr)
 		-- disable for these filetypes
@@ -47,4 +48,8 @@ vim.api.nvim_create_user_command("FormatToggle", function(args)
 end, {
 	desc = "Disable autoformat-on-save",
 	bang = true,
+})
+
+vim.api.nvim_create_user_command("W", "noautocmd write", {
+	desc = "Write file without triggering autocommands",
 })
