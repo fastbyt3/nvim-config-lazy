@@ -150,9 +150,9 @@ local plugin_specs = {
 		"catppuccin/nvim",
 		name = "catppuccin",
 		lazy = true,
-		-- config = function()
-		-- 	require("config.catppuccin_colors")
-		-- end,
+		config = function()
+			-- require("config.catppuccin_colors")
+		end,
 	},
 	{ "rebelot/kanagawa.nvim", lazy = true },
 	{ "nvim-tree/nvim-web-devicons", event = "VeryLazy" },
@@ -311,7 +311,7 @@ local plugin_specs = {
 			{
 				"<leader>lf",
 				function()
-					require("conform").format({ async = true })
+					require("conform")
 				end,
 				desc = "format buffer",
 			},
@@ -389,6 +389,24 @@ local plugin_specs = {
 		"MagicDuck/grug-far.nvim",
 		config = function()
 			require("grug-far").setup({})
+		end,
+	},
+
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim", branch = "master" },
+			"github/copilot.vim",
+		},
+		build = "make tiktoken",
+	},
+
+	{
+		"rachartier/tiny-inline-diagnostic.nvim",
+		event = "VeryLazy",
+		priority = 1000,
+		config = function()
+			require("config.tiny-inline-diagnostic")
 		end,
 	},
 }

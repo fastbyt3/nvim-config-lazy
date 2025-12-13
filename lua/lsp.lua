@@ -69,44 +69,45 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-local severity = vim.diagnostic.severity
+-- local severity = vim.diagnostic.severity
 
-vim.diagnostic.config({
-	underline = false,
-	virtual_text = false,
-	virtual_lines = false,
-	signs = {
-		text = {
-			[severity.ERROR] = " ",
-			[severity.WARN] = " ",
-			[severity.HINT] = "󰠠 ",
-			[severity.INFO] = " ",
-		},
-	},
-	float = {
-		source = true,
-		header = "Diagnostics:",
-		prefix = " ",
-		border = "single",
-	},
-})
+-- vim.diagnostic.config({
+-- plugin tiny-inline-diagnostic.nvim is used so diagnostic is disabled
+-- underline = false,
+-- virtual_text = false,
+-- virtual_lines = false,
+-- signs = {
+-- 	text = {
+-- 		[severity.ERROR] = " ",
+-- 		[severity.WARN] = " ",
+-- 		[severity.HINT] = "󰠠 ",
+-- 		[severity.INFO] = " ",
+-- 	},
+-- },
+-- float = {
+-- 	source = true,
+-- 	header = "Diagnostics:",
+-- 	prefix = " ",
+-- 	border = "single",
+-- },
+-- })
 
-vim.api.nvim_create_autocmd("CursorHold", {
-	pattern = "*",
-	callback = function()
-		if #vim.diagnostic.get(0) == 0 then
-			return
-		end
-
-		if not vim.b.diagnostics_pos then
-			vim.b.diagnostics_pos = { nil, nil }
-		end
-
-		local cursor_pos = vim.api.nvim_win_get_cursor(0)
-		if cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2] then
-			vim.diagnostic.open_float()
-		end
-
-		vim.b.diagnostics_pos = cursor_pos
-	end,
-})
+-- vim.api.nvim_create_autocmd("CursorHold", {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		if #vim.diagnostic.get(0) == 0 then
+-- 			return
+-- 		end
+--
+-- 		if not vim.b.diagnostics_pos then
+-- 			vim.b.diagnostics_pos = { nil, nil }
+-- 		end
+--
+-- 		local cursor_pos = vim.api.nvim_win_get_cursor(0)
+-- 		if cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2] then
+-- 			vim.diagnostic.open_float()
+-- 		end
+--
+-- 		vim.b.diagnostics_pos = cursor_pos
+-- 	end,
+-- })

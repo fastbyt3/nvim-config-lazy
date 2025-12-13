@@ -1,13 +1,40 @@
+vim.api.nvim_create_user_command("ConformDisable", function(args)
+	if args.bang then
+		-- FormatDisable! will disable formatting just for this buffer
+		vim.b.disable_autoformat = true
+	else
+		vim.g.disable_autoformat = true
+	end
+end, {
+	desc = "Disable conform-autoformat-on-save",
+	bang = true,
+})
+
+vim.api.nvim_create_user_command("ConformEnable", function()
+	vim.b.disable_autoformat = false
+	vim.g.disable_autoformat = false
+end, {
+	desc = "Re-enable conform-autoformat-on-save",
+})
+
 require("conform").setup({
+	notify_on_error = false,
+	default_format_opts = {
+		async = true,
+		timeout_ms = 500,
+		lsp_format = "fallback",
+	},
 	formatters_by_ft = {
 		lua = { "stylua" },
 		python = { "black" },
-		css = { "prettier", "prettierd", stop_after_first = true },
-		html = { "prettier", "prettierd", stop_after_first = true },
-		yaml = { "prettier", "prettierd", stop_after_first = true },
-		jsonc = { "prettier", "prettierd", stop_after_first = true },
-		json = { "prettier", "prettierd", stop_after_first = true },
-		javascript = { "prettier", "prettierd", stop_after_first = true },
+		css = { "prettierd", stop_after_first = true },
+		html = { "prettierd", stop_after_first = true },
+		yaml = { "prettierd", stop_after_first = true },
+		jsonc = { "prettierd", stop_after_first = true },
+		json = { "prettierd", stop_after_first = true },
+		javascript = { "biome", "prettierd", stop_after_first = true },
+		typescript = { "biome", "prettierd", stop_after_first = true },
+		typescriptreact = { "biome", "prettierd", stop_after_first = true },
 		go = { "goimports", "gofmt" },
 		terraform = { "terraform_fmt" },
 	},
@@ -35,21 +62,33 @@ require("conform").setup({
 			lsp_format = "fallback",
 		}
 	end,
-})
-
--- FormatToggle will toggle formatting for workspace
--- FormatToggle! will toggle formatting just for curr buffer
-vim.api.nvim_create_user_command("FormatToggle", function(args)
-	if args.bang then
-		vim.b.disable_autoformat = not vim.b.disable_autoformat
-	else
-		vim.g.disable_autoformat = not vim.g.disable_autoformat
-	end
-end, {
-	desc = "Disable autoformat-on-save",
-	bang = true,
-})
-
-vim.api.nvim_create_user_command("W", "noautocmd write", {
-	desc = "Write file without triggering autocommands",
+	formatters = {
+		biome = {
+			condition = function(_, ctx)
+				return vim.fs.find({ "biome.json", "biome.jsonc" }, {
+					path = ctx.filename,
+					upward = true,
+					stop = vim.uv.os_homedir(),
+				})[1] ~= nil
+			end,
+		},
+		prettierd = {
+			condition = function(_, ctx)
+				return vim.fs.find({
+					".prettierrc",
+					".prettierrc.json",
+					".prettierrc.js",
+					".prettierrc.cjs",
+					".prettierrc.mjs",
+					"prettier.config.js",
+					"prettier.config.cjs",
+					"prettier.config.mjs",
+				}, {
+					path = ctx.filename,
+					upward = true,
+					stop = vim.uv.os_homedir(),
+				})[1] ~= nil
+			end,
+		},
+	},
 })

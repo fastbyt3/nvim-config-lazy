@@ -1,7 +1,7 @@
 local api = vim.api
 local keymap = vim.keymap
 local lsp = vim.lsp
-local diagnostic = vim.diagnostic
+-- local diagnostic = vim.diagnostic
 local lspconfig = require("lspconfig")
 
 local utils = require("utils")
@@ -363,43 +363,43 @@ elixir.setup({
 })
 
 -- global config for diagnostic
-diagnostic.config({
-	underline = false,
-	virtual_text = false,
-	virtual_lines = false,
-	-- signs = {
-	-- 	text = {
-	-- 		[vim.diagnostic.severity.ERROR] = "",
-	-- 		[vim.diagnostic.severity.WARN] = "",
-	-- 		[vim.diagnostic.severity.INFO] = "",
-	-- 		[vim.diagnostic.severity.HINT] = "󰌵",
-	-- 	},
-	-- },
-	severity_sort = true,
-	float = {
-		source = true,
-		header = "Diagnostics:",
-		prefix = " ",
-		border = "single",
-	},
-})
+-- diagnostic.config({
+-- 	underline = false,
+-- 	virtual_text = false,
+-- 	virtual_lines = false,
+-- 	-- signs = {
+-- 	-- 	text = {
+-- 	-- 		[vim.diagnostic.severity.ERROR] = "",
+-- 	-- 		[vim.diagnostic.severity.WARN] = "",
+-- 	-- 		[vim.diagnostic.severity.INFO] = "",
+-- 	-- 		[vim.diagnostic.severity.HINT] = "󰌵",
+-- 	-- 	},
+-- 	-- },
+-- 	severity_sort = true,
+-- 	float = {
+-- 		source = true,
+-- 		header = "Diagnostics:",
+-- 		prefix = " ",
+-- 		border = "single",
+-- 	},
+-- })
 
-api.nvim_create_autocmd("CursorHold", {
-	pattern = "*",
-	callback = function()
-		if #vim.diagnostic.get(0) == 0 then
-			return
-		end
-
-		if not vim.b.diagnostics_pos then
-			vim.b.diagnostics_pos = { nil, nil }
-		end
-
-		local cursor_pos = api.nvim_win_get_cursor(0)
-		if cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2] then
-			diagnostic.open_float()
-		end
-
-		vim.b.diagnostics_pos = cursor_pos
-	end,
-})
+-- api.nvim_create_autocmd("CursorHold", {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		if #vim.diagnostic.get(0) == 0 then
+-- 			return
+-- 		end
+--
+-- 		if not vim.b.diagnostics_pos then
+-- 			vim.b.diagnostics_pos = { nil, nil }
+-- 		end
+--
+-- 		local cursor_pos = api.nvim_win_get_cursor(0)
+-- 		if cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2] then
+-- 			diagnostic.open_float()
+-- 		end
+--
+-- 		vim.b.diagnostics_pos = cursor_pos
+-- 	end,
+-- })
