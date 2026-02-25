@@ -147,6 +147,19 @@ local plugin_specs = {
 	{ "sainnhe/gruvbox-material", lazy = true },
 	{ "sainnhe/everforest", lazy = true },
 	{
+		"nordtheme/vim",
+		lazy = true,
+	},
+	{
+		"AlexvZyl/nordic.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("nordic").load()
+		end,
+	},
+	"EdenEast/nightfox.nvim",
+	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		lazy = true,
@@ -154,7 +167,6 @@ local plugin_specs = {
 			-- require("config.catppuccin_colors")
 		end,
 	},
-	{ "rebelot/kanagawa.nvim", lazy = true },
 	{ "nvim-tree/nvim-web-devicons", event = "VeryLazy" },
 
 	{
@@ -296,9 +308,9 @@ local plugin_specs = {
 		end,
 	},
 
-	{
-		"sindrets/diffview.nvim",
-	},
+	-- {
+	-- 	"sindrets/diffview.nvim",
+	-- },
 
 	-- Formatter
 	{
@@ -399,6 +411,9 @@ local plugin_specs = {
 			"github/copilot.vim",
 		},
 		build = "make tiktoken",
+		config = function()
+			require("config.copilot-chat")
+		end,
 	},
 
 	{
@@ -409,10 +424,38 @@ local plugin_specs = {
 			require("config.tiny-inline-diagnostic")
 		end,
 	},
+
+	{
+		"Bekaboo/dropbar.nvim",
+		-- optional, but required for fuzzy finder support
+		dependencies = {
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+		},
+		config = function()
+			local dropbar_api = require("dropbar.api")
+			vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
+			vim.keymap.set("n", "[;", dropbar_api.goto_context_start, { desc = "Go to start of current context" })
+			vim.keymap.set("n", "];", dropbar_api.select_next_context, { desc = "Select next context" })
+		end,
+	},
 }
 
 require("lazy").setup({
 	spec = plugin_specs,
+	install = { colorscheme = { "catppuccin" } },
+	checker = { enabled = true, notify = false },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 	ui = {
 		border = "rounded",
 		title = "Plugin Manager",

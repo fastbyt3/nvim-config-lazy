@@ -26,7 +26,7 @@ require("conform").setup({
 	},
 	formatters_by_ft = {
 		lua = { "stylua" },
-		python = { "black" },
+		python = { "isort", "black", timeout_ms = 5000 },
 		css = { "prettierd", stop_after_first = true },
 		html = { "prettierd", stop_after_first = true },
 		yaml = { "prettierd", stop_after_first = true },
@@ -87,7 +87,18 @@ require("conform").setup({
 					path = ctx.filename,
 					upward = true,
 					stop = vim.uv.os_homedir(),
-				})[1] ~= nil
+				})[1] ~= nil or vim.tbl_contains({
+					"json",
+					"js",
+					"ts",
+					"javascriptreact",
+					"typescriptreact",
+					"css",
+					"scss",
+					"html",
+					"graphql",
+					"angular",
+				}, vim.bo[ctx.buf].filetype)
 			end,
 		},
 	},

@@ -53,3 +53,6 @@ map("x", "c.", [[:<C-u>%s/\V<C-r>=luaeval("require'utils'.get_visual_selection(t
 vim.keymap.set("n", "<leader>cn", ":cnext<cr>zz", { desc = "Go to next quickfix item and center" })
 vim.keymap.set("n", "<leader>cp", ":cprevious<cr>zz", { desc = "Go to previous quickfix item and center" })
 vim.keymap.set("n", "<leader>cc", ":cclose<cr>zz", { desc = "Close quickfix list" })
+
+-- Copilot chat
+map("n", "<space>cc", "<cmd>CopilotChatToggle<cr>", { desc = "Toggle Copilot Chat" })

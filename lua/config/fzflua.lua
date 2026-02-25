@@ -210,3 +210,5 @@ local default_opts = {
 fzf_lua.setup(default_opts)
 
 require("config.fzflua-mappings")
+
+fzf_lua.register_ui_select()

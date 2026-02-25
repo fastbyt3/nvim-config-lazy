@@ -52,7 +52,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end, opts) -- jump to next diagnostic in buffer
 
 		opts.desc = "Show documentation for what is under cursor"
-		keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+		keymap.set("n", "K", function()
+			vim.lsp.buf.hover({ border = "single", max_height = 40 })
+		end, opts) -- show documentation for what is under cursor
 
 		opts.desc = "Show signature help for method"
 		keymap.set({ "n", "i" }, "<C-h>", function()
@@ -71,26 +73,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- local severity = vim.diagnostic.severity
 
--- vim.diagnostic.config({
--- plugin tiny-inline-diagnostic.nvim is used so diagnostic is disabled
--- underline = false,
--- virtual_text = false,
--- virtual_lines = false,
--- signs = {
--- 	text = {
--- 		[severity.ERROR] = " ",
--- 		[severity.WARN] = " ",
--- 		[severity.HINT] = "󰠠 ",
--- 		[severity.INFO] = " ",
--- 	},
--- },
--- float = {
--- 	source = true,
--- 	header = "Diagnostics:",
--- 	prefix = " ",
--- 	border = "single",
--- },
--- })
+vim.diagnostic.config({
+	-- plugin tiny-inline-diagnostic.nvim is used so diagnostic is disabled
+	-- underline = false,
+	-- virtual_text = false,
+	-- virtual_lines = false,
+	-- signs = {
+	-- 	text = {
+	-- 		[severity.ERROR] = " ",
+	-- 		[severity.WARN] = " ",
+	-- 		[severity.HINT] = "󰠠 ",
+	-- 		[severity.INFO] = " ",
+	-- 	},
+	-- },
+	float = {
+		source = true,
+		header = "Diagnostics:",
+		prefix = " ",
+		border = "single",
+	},
+})
 
 -- vim.api.nvim_create_autocmd("CursorHold", {
 -- 	pattern = "*",
