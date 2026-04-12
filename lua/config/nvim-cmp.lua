@@ -35,10 +35,12 @@ cmp.setup({
 		end,
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
 		["<C-e>"] = cmp.mapping.abort(),
-		["<Esc>"] = function()
-			cmp.mapping.close()
-			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", true)
-		end,
+		["<Esc>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.close()
+			end
+			fallback()
+		end, { "i", "s" }),
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 	}),

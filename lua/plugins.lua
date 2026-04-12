@@ -277,6 +277,31 @@ local plugin_specs = {
 		"catgoose/nvim-colorizer.lua",
 		event = "BufReadPre",
 		opts = { -- set to setup table
+		opts = {
+			filetypes = {
+				"css",
+				"scss",
+				"html",
+				"javascript",
+				"typescript",
+				"javascriptreact",
+				"typescriptreact",
+				"lua",
+				"json",
+				"yaml",
+			},
+			user_default_options = {
+				RGB = true,
+				RRGGBB = true,
+				names = false,
+				RRGGBBAA = true,
+				AARRGGBB = false,
+				rgb_fn = true,
+				hsl_fn = true,
+				css = true,
+				css_fn = true,
+				mode = "background",
+			},
 		},
 	},
 
@@ -387,6 +412,11 @@ local plugin_specs = {
 		---@module 'render-markdown'
 		---@type render.md.UserConfig
 		opts = {
+			code = {
+				sign = false,
+				width = "block",
+				right_pad = 1,
+			},
 			-- heading = {
 			-- 	enabled = false,
 			-- 	-- atx = true,
