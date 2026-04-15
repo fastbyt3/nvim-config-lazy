@@ -53,22 +53,22 @@ return {
 			install_missing_parsers()
 		end,
 	},
-	
-  -- {
-	-- 	"nvim-treesitter/nvim-treesitter-textobjects",
-	-- 	branch = "main",
-	-- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
-	-- 	config = function()
-	-- 		require("nvim-treesitter-textobjects").setup({
-	-- 			select = {
-	-- 				lookahead = true,
-	-- 			},
-	-- 			move = {
-	-- 				set_jumps = true,
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
+
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("nvim-treesitter-textobjects").setup({
+				select = {
+					lookahead = true,
+				},
+				move = {
+					set_jumps = true,
+				},
+			})
+		end,
+	},
 	-- {
 	-- 	"nvim-treesitter/nvim-treesitter-context",
 	-- 	dependencies = { "nvim-treesitter/nvim-treesitter" },

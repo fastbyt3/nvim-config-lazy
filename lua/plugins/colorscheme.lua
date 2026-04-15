@@ -12,6 +12,7 @@ return {
 				integrations = {
 					diffview = true,
 					fidget = true,
+					fzf = true,
 					harpoon = true,
 					mason = true,
 					native_lsp = { enabled = true },
@@ -30,27 +31,38 @@ return {
 					which_key = true,
 				},
 			})
-			local palette = require("catppuccin.palettes").get_palette("macchiato")
-			vim.cmd.colorscheme("catppuccin-macchiato")
-
-			-- Telescope highlights to match editor background
-			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = palette.blue, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = palette.blue, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = palette.blue, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = palette.blue, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeTitle", { fg = palette.mauve, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = palette.mauve, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = palette.mauve, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = palette.mauve, bg = palette.base })
+			-- local palette = require("catppuccin.palettes").get_palette("macchiato")
+			-- vim.cmd.colorscheme("catppuccin-macchiato")
 
 			-- Hide all semantic highlights until upstream issues are resolved (https://github.com/catppuccin/nvim/issues/480)
-			for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-				vim.api.nvim_set_hl(0, group, {})
-			end
+			-- for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+			-- 	vim.api.nvim_set_hl(0, group, {})
+			-- end
 		end,
+	},
+	{
+		"navarasu/onedark.nvim",
+		lazy = true,
+		opts = {
+			toggle_style_key = "<leader>ts",
+		},
+	},
+	{ "sainnhe/gruvbox-material", lazy = true },
+	{ "sainnhe/everforest", lazy = true },
+	{
+		"nordtheme/vim",
+		lazy = true,
+	},
+	{
+		"AlexvZyl/nordic.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("nordic").load()
+		end,
+	},
+	{
+		"EdenEast/nightfox.nvim",
+		lazy = true,
 	},
 }

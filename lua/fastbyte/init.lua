@@ -1,6 +1,6 @@
 require("fastbyte.options")
 require("fastbyte.lazy")
--- require("fastbyte.keymaps")
+require("fastbyte.keymaps")
 -- require("fastbyte.highlight_yank")
 -- require("fastbyte.rotate_windows")
 -- require("fastbyte.vertical_help")
@@ -9,3 +9,5 @@ require("fastbyte.lazy")
 -- require("fastbyte.ocaml_extensions")
 -- require("fastbyte.set_column_width")
 require("fastbyte.autocmds")
+
+vim.cmd.colorscheme("catppuccin-macchiato")
