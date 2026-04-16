@@ -51,6 +51,7 @@ return {
 				relative = "cursor",
 				row = 0,
 				col = 1,
+				border = "rounded",
 			},
 			on_attach = function(bufnr)
 				local function map(mode, l, r, opts)

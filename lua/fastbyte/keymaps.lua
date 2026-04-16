@@ -43,7 +43,7 @@ vim.keymap.set("n", "<leader>co", ":copen<cr>zz", { desc = "Open quickfix list a
 vim.keymap.set("n", "<leader>cc", ":cclose<cr>zz", { desc = "Close quickfix list" })
 
 -- Format current buffer
-vim.keymap.set("n", "<leader>f", function()
+vim.keymap.set("n", "<leader>lf", function()
 	require("conform").format({
 		async = true,
 		timeout_ms = 500,
@@ -64,27 +64,7 @@ end, { desc = "Indent right and reselect visual block" })
 
 local M = {}
 
--- LSP Keybinds (per-buffer)
-M.map_lsp_keybinds = function(buffer_number)
-	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: Rename symbol", buffer = buffer_number })
-	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code action", buffer = buffer_number })
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to definition", buffer = buffer_number })
-
-	local signature_help = function()
-		return vim.lsp.buf.signature_help({ border = "rounded" })
-	end
-
-	local hover = function()
-		return vim.lsp.buf.hover({ border = "rounded" })
-	end
-
-	vim.keymap.set("n", "K", hover, { desc = "LSP: Signature help", buffer = buffer_number })
-
-	vim.keymap.set("i", "<C-k>", signature_help, { desc = "LSP: Signature help", buffer = buffer_number })
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: Go to declaration", buffer = buffer_number })
-	vim.keymap.set("n", "td", vim.lsp.buf.type_definition, { desc = "LSP: Type definition", buffer = buffer_number })
-end
-
+-- FzfLua Keybinds
 M.map_fzflua_keybinds = function()
 	local fzflua = require("fzf-lua")
 	vim.keymap.set("n", "<C-p>", fzflua.buffers, { desc = "Buffer picker" })
@@ -105,6 +85,27 @@ M.map_fzflua_keybinds = function()
 	vim.keymap.set("n", "<leader>ls", fzflua.lsp_document_symbols, { desc = "LSP current buffer symbols" })
 	vim.keymap.set("n", "<leader>lS", fzflua.lsp_live_workspace_symbols, { desc = "LSP workspace symbols" })
 	vim.keymap.set("n", "<leader>xx", fzflua.lsp_workspace_diagnostics, { desc = "LSP workspace diagnostics" })
+end
+
+-- LSP Keybinds (per-buffer)
+M.map_lsp_keybinds = function(buffer_number)
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: Rename symbol", buffer = buffer_number })
+	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code action", buffer = buffer_number })
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to definition", buffer = buffer_number })
+
+	local signature_help = function()
+		return vim.lsp.buf.signature_help({ border = "rounded" })
+	end
+
+	local hover = function()
+		return vim.lsp.buf.hover({ border = "rounded" })
+	end
+
+	vim.keymap.set("n", "K", hover, { desc = "LSP: Signature help", buffer = buffer_number })
+
+	vim.keymap.set("i", "<C-k>", signature_help, { desc = "LSP: Signature help", buffer = buffer_number })
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: Go to declaration", buffer = buffer_number })
+	vim.keymap.set("n", "td", vim.lsp.buf.type_definition, { desc = "LSP: Type definition", buffer = buffer_number })
 end
 
 -- Treesitter selection + textobjects

@@ -5,7 +5,7 @@ return {
 		dependencies = {
 			"rafamadriz/friendly-snippets",
 			"L3MON4D3/LuaSnip",
-      "hrsh7th/nvim-cmp",
+			"hrsh7th/nvim-cmp",
 		},
 		version = "v1.*",
 		opts = {

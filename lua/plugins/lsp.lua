@@ -57,6 +57,18 @@ return {
 					filetypes = { "typescriptreact", "javascriptreact", "html", "svelte", "astro" },
 				},
 				yamlls = {},
+				gopls = {
+					settings = {
+						gopls = {
+							analyses = {
+								unusedparams = true,
+								shadow = true,
+							},
+							staticcheck = true,
+							gofumpt = true,
+						},
+					},
+				},
 				rust_analyzer = {
 					settings = {
 						["rust-analyzer"] = {

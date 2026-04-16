@@ -10,4 +10,4 @@ require("fastbyte.keymaps")
 -- require("fastbyte.set_column_width")
 require("fastbyte.autocmds")
 
-vim.cmd.colorscheme("catppuccin-macchiato")
+vim.cmd.colorscheme("catppuccin-mocha")
