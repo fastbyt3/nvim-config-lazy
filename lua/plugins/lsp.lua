@@ -1,14 +1,14 @@
 return {
-  {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    opts = {
-      library = {
-        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-      },
-    },
-  },
-  {
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPost" },
 		cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
@@ -21,17 +21,6 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			-- Progress indicator for LSP
 			{ "j-hui/fidget.nvim" },
-			-- Breadcrumbs/symbol hierarchy
-			{
-				"SmiteshP/nvim-navic",
-				dependencies = "neovim/nvim-lspconfig",
-				opts = {
-					highlight = true,
-					separator = " > ",
-					depth_limit = 5,
-					depth_limit_indicator = "...",
-				},
-			},
 		},
 		config = function()
 			local map_lsp_keybinds = require("fastbyte.keymaps").map_lsp_keybinds
@@ -175,6 +164,77 @@ return {
 			-- Setup Mason for managing external LSP servers
 			require("mason").setup({ ui = { border = "rounded" } })
 			require("mason-lspconfig").setup()
+		end,
+	},
+	{
+		"SmiteshP/nvim-navic",
+		dependencies = "neovim/nvim-lspconfig",
+		opts = {
+			highlight = true,
+			separator = " ",
+			depth_limit = 5,
+			depth_limit_indicator = "...",
+			icons = {
+				File = " ",
+				Module = " ",
+				Namespace = "󰌗 ",
+				Package = "󰏖 ",
+				Class = "󰌗 ",
+				Method = "󰊕 ",
+				Property = "󰜢 ",
+				Field = "󰆨 ",
+				Constructor = " ",
+				Enum = " ",
+				Interface = "󰠱 ",
+				Function = "󰊕 ",
+				Variable = "󰂡 ",
+				Constant = "󰏿 ",
+				String = "󰀬 ",
+				Number = "󰎠 ",
+				Boolean = "◩ ",
+				Array = "󰅪 ",
+				Object = "󰅩 ",
+				Key = "󰌋 ",
+				Null = "󰟢 ",
+				EnumMember = " ",
+				Struct = "󰌗 ",
+				Event = " ",
+				Operator = "󰆕 ",
+				TypeParameter = " ",
+			},
+			lazy_update_context = true,
+		},
+		config = function(_, opts)
+			require("nvim-navic").setup(opts)
+			-- Set navic icon colors to match your theme
+			vim.api.nvim_set_hl(0, "NavicIconsFile", { default = true, link = "Directory" })
+			vim.api.nvim_set_hl(0, "NavicIconsModule", { default = true, link = "Include" })
+			vim.api.nvim_set_hl(0, "NavicIconsNamespace", { default = true, link = "Include" })
+			vim.api.nvim_set_hl(0, "NavicIconsPackage", { default = true, link = "Include" })
+			vim.api.nvim_set_hl(0, "NavicIconsClass", { default = true, link = "Type" })
+			vim.api.nvim_set_hl(0, "NavicIconsMethod", { default = true, link = "Function" })
+			vim.api.nvim_set_hl(0, "NavicIconsProperty", { default = true, link = "Identifier" })
+			vim.api.nvim_set_hl(0, "NavicIconsField", { default = true, link = "Identifier" })
+			vim.api.nvim_set_hl(0, "NavicIconsConstructor", { default = true, link = "Special" })
+			vim.api.nvim_set_hl(0, "NavicIconsEnum", { default = true, link = "Type" })
+			vim.api.nvim_set_hl(0, "NavicIconsInterface", { default = true, link = "Type" })
+			vim.api.nvim_set_hl(0, "NavicIconsFunction", { default = true, link = "Function" })
+			vim.api.nvim_set_hl(0, "NavicIconsVariable", { default = true, link = "Identifier" })
+			vim.api.nvim_set_hl(0, "NavicIconsConstant", { default = true, link = "Constant" })
+			vim.api.nvim_set_hl(0, "NavicIconsString", { default = true, link = "String" })
+			vim.api.nvim_set_hl(0, "NavicIconsNumber", { default = true, link = "Number" })
+			vim.api.nvim_set_hl(0, "NavicIconsBoolean", { default = true, link = "Boolean" })
+			vim.api.nvim_set_hl(0, "NavicIconsArray", { default = true, link = "Type" })
+			vim.api.nvim_set_hl(0, "NavicIconsObject", { default = true, link = "Type" })
+			vim.api.nvim_set_hl(0, "NavicIconsKey", { default = true, link = "Keyword" })
+			vim.api.nvim_set_hl(0, "NavicIconsNull", { default = true, link = "Constant" })
+			vim.api.nvim_set_hl(0, "NavicIconsEnumMember", { default = true, link = "Constant" })
+			vim.api.nvim_set_hl(0, "NavicIconsStruct", { default = true, link = "Structure" })
+			vim.api.nvim_set_hl(0, "NavicIconsEvent", { default = true, link = "Special" })
+			vim.api.nvim_set_hl(0, "NavicIconsOperator", { default = true, link = "Operator" })
+			vim.api.nvim_set_hl(0, "NavicIconsTypeParameter", { default = true, link = "Type" })
+			vim.api.nvim_set_hl(0, "NavicText", { default = true, link = "Normal" })
+			vim.api.nvim_set_hl(0, "NavicSeparator", { default = true, link = "Comment" })
 		end,
 	},
 }

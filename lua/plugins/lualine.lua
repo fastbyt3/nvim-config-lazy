@@ -192,7 +192,7 @@ return {
 							end
 							return ""
 						end,
-						{ "navic", color_correction = "dynamic" },
+						{ "navic" },
 						{
 							wordCount.getWords,
 							color = { fg = "#333333", bg = "#eeeeee" },

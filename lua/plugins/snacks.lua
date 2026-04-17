@@ -90,19 +90,19 @@ return {
 				desc = "[N]otification [H]istory",
 			},
 			{
-				"<leader>ln",
+				"<leader>tln",
 				function()
 					Snacks.toggle.option("relativenumber", { name = "Relative Number" }):toggle()
 				end,
-				desc = "Toggle Relative [L]ine [N]umbers",
+				desc = "[T]oggle Relative [L]ine [N]umbers",
 			},
-			{
-				"<leader>cl",
-				function()
-					Snacks.toggle.option("cursorline", { name = "Cursor Line" }):toggle()
-				end,
-				desc = "Toggle [C]ursor [L]ine",
-			},
+			-- {
+			-- 	"<leader>cl",
+			-- 	function()
+			-- 		Snacks.toggle.option("cursorline", { name = "Cursor Line" }):toggle()
+			-- 	end,
+			-- 	desc = "Toggle [C]ursor [L]ine",
+			-- },
 			{
 				"<leader>td",
 				function()
@@ -111,11 +111,11 @@ return {
 				desc = "[T]oggle [D]iagnostics",
 			},
 			{
-				"<leader>zm",
+				"<leader>tdm",
 				function()
 					Snacks.toggle.dim():toggle()
 				end,
-				desc = "Toggle Dim Mode",
+				desc = "[T]oggle [D]im [M]ode",
 			},
 			{
 				"<leader>tw",
@@ -143,7 +143,7 @@ return {
 			-- 	desc = "Toggle [T]reesitter Conte[x]t",
 			-- },
 			{
-				"<leader>ih",
+				"<leader>tih",
 				function()
 					Snacks.toggle({
 						name = "Inlay Hints",
@@ -159,10 +159,10 @@ return {
 						end,
 					}):toggle()
 				end,
-				desc = "Toggle [I]nlay [H]ints",
+				desc = "[T]oggle [I]nlay [H]ints",
 			},
 			{
-				"<leader>hl",
+				"<leader>thl",
 				function()
 					local hc = require("nvim-highlight-colors")
 					Snacks.toggle({
@@ -179,7 +179,7 @@ return {
 						end,
 					}):toggle()
 				end,
-				desc = "Toggle [H]igh[L]ight Colors",
+				desc = "[T]oggle [H]igh[L]ight Colors",
 			},
 			{
 				"<leader>.",

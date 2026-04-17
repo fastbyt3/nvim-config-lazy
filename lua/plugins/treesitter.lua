@@ -1,6 +1,7 @@
 local parser_languages = {
 	"bash",
 	"css",
+	"elixir",
 	"gleam",
 	"go",
 	"html",
