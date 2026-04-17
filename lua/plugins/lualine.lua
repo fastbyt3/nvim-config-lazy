@@ -185,6 +185,14 @@ return {
 								newfile = "[New]", -- Text to show for new created file before first writting
 							},
 						},
+						function()
+							local navic = require("nvim-navic")
+							if navic.is_available() then
+								return "󱑼"
+							end
+							return ""
+						end,
+						{ "navic", color_correction = "dynamic" },
 						{
 							wordCount.getWords,
 							color = { fg = "#333333", bg = "#eeeeee" },

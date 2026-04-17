@@ -50,6 +50,7 @@ return {
 				typescript = { "oxfmt", "biome", "prettierd", stop_after_first = true },
 				typescriptreact = { "oxfmt", "biome", "prettierd", stop_after_first = true },
 				lua = { "stylua" },
+				go = { "gofumpt", "goimports" },
 			},
 			formatters = {
 				oxfmt = {

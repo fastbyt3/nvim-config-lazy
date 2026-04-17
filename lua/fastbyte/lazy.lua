@@ -29,4 +29,3 @@ lazy.setup({
 	},
 	checker = { enabled = true },
 })
-

@@ -1,3 +1,8 @@
+-- Toggle undo tree
+vim.keymap.set("n", "<leader>ut", function()
+  require("undotree").open()
+end, { desc = "Toggle undotree" })
+
 -- cpy to system register
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system register" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Copy curr line to system register" })

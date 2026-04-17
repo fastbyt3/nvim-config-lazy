@@ -1,5 +1,6 @@
 require("fastbyte.options")
 require("fastbyte.lazy")
+require("fastbyte.builtin-plugins")
 require("fastbyte.keymaps")
 -- require("fastbyte.highlight_yank")
 -- require("fastbyte.rotate_windows")

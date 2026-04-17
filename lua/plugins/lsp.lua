@@ -21,6 +21,17 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			-- Progress indicator for LSP
 			{ "j-hui/fidget.nvim" },
+			-- Breadcrumbs/symbol hierarchy
+			{
+				"SmiteshP/nvim-navic",
+				dependencies = "neovim/nvim-lspconfig",
+				opts = {
+					highlight = true,
+					separator = " > ",
+					depth_limit = 5,
+					depth_limit_indicator = "...",
+				},
+			},
 		},
 		config = function()
 			local map_lsp_keybinds = require("fastbyte.keymaps").map_lsp_keybinds
@@ -81,6 +92,8 @@ return {
 			local formatters = {
 				prettierd = {},
 				stylua = {},
+				gofumpt = {},
+				goimports = {},
 			}
 
 			local manually_installed_servers = {}
@@ -129,6 +142,12 @@ return {
 					end
 
 					map_lsp_keybinds(bufnr)
+
+					-- Attach nvim-navic for breadcrumbs
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if client and client.server_capabilities.documentSymbolProvider then
+						require("nvim-navic").attach(client, bufnr)
+					end
 				end,
 			})
 
