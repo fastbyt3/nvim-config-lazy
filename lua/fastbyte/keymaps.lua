@@ -1,11 +1,14 @@
 -- Toggle undo tree
 vim.keymap.set("n", "<leader>ut", function()
-  require("undotree").open()
+	require("undotree").open()
 end, { desc = "Toggle undotree" })
 
 -- cpy to system register
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system register" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Copy curr line to system register" })
+
+-- Do not copy whitespace when using $ in visual mode
+vim.keymap.set("x", "$", "g_", { desc = "Select till end of line" })
 
 -- Center buffer while navigating
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center cursor" })
