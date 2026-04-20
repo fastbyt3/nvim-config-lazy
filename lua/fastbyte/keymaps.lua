@@ -70,6 +70,9 @@ vim.keymap.set("x", ">>", function()
 	vim.cmd("normal! gv")
 end, { desc = "Indent right and reselect visual block" })
 
+-- Use Esc to quit builtin terminal
+vim.keymap.set("t", "<Esc>", [[<c-\><c-n>]])
+
 local M = {}
 
 -- FzfLua Keybinds
