@@ -69,13 +69,13 @@ return {
 						},
 					},
 				},
-				rust_analyzer = {
-					settings = {
-						["rust-analyzer"] = {
-							check = { command = "clippy", features = "all" },
-						},
-					},
-				},
+				-- rust_analyzer = {
+				-- 	settings = {
+				-- 		["rust-analyzer"] = {
+				-- 			check = { command = "clippy", features = "all" },
+				-- 		},
+				-- 	},
+				-- },
 			}
 
 			local formatters = {

@@ -23,7 +23,7 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = true
 
 -- Disable text wrap
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 -- Set leader key to space
 vim.g.mapleader = ","

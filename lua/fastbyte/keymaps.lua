@@ -170,13 +170,15 @@ local treesitter_move = function(method, query, query_group)
 	end
 end
 
-vim.keymap.set("n", "<C-Space>", function()
-	if treesitter_select() then
-		vim.cmd.normal({ "van", bang = true })
-	else
-		vim.lsp.buf.selection_range(1)
-	end
-end, { desc = "Treesitter: Start incremental selection" })
+-- <C-Space> is handled by blink.cmp for completions
+-- Treesitter incremental selection uses <C-v> instead
+-- vim.keymap.set("n", "<C-Space>", function()
+-- 	if treesitter_select() then
+-- 		vim.cmd.normal({ "van", bang = true })
+-- 	else
+-- 		vim.lsp.buf.selection_range(1)
+-- 	end
+-- end, { desc = "Treesitter: Start incremental selection" })
 
 vim.keymap.set("x", "<C-Space>", treesitter_select_parent, { desc = "Treesitter: Expand selection" })
 vim.keymap.set("x", "<C-s>", treesitter_select_scope, { desc = "Treesitter: Expand to scope" })
