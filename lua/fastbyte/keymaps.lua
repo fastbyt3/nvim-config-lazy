@@ -44,6 +44,28 @@ vim.keymap.set("n", "[d", function()
 	end
 end, { desc = "Go to previous diagnostic and center" })
 
+local function copy_inline_diagnostic_to_clipboard()
+	local plugin = require("tiny-inline-diagnostic")
+	local diagnostics = plugin.get_diagnostic_under_cursor()
+
+	if #diagnostics == 0 then
+		Snacks.notify.info("No diagnostics on the current line.")
+		return
+	end
+
+	local diagnostic_messages = {}
+	for _, diagnostic in ipairs(diagnostics) do
+		table.insert(diagnostic_messages, diagnostic.message)
+	end
+	local result = table.concat(diagnostic_messages, "\n")
+
+	-- Copy the result to the system clipboard
+	vim.fn.setreg("+", result)
+	Snacks.notify.info("Diagnostics copied to clipboard.")
+end
+
+vim.keymap.set("n", ",cd", copy_inline_diagnostic_to_clipboard, { desc = "[C]opy line [D]iagnostics" })
+
 -- Quickfix navigation
 vim.keymap.set("n", "<leader>cn", ":cnext<cr>zz", { desc = "Go to next quickfix item and center" })
 vim.keymap.set("n", "<leader>cp", ":cprevious<cr>zz", { desc = "Go to previous quickfix item and center" })
