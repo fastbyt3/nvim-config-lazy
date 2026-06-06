@@ -97,27 +97,65 @@ vim.keymap.set("t", "<Esc>", [[<c-\><c-n>]])
 
 local M = {}
 
+-- Helper function to add ctrl-q (select all to quickfix) to any fzf-lua picker
+local function add_ctrl_q_to_picker(picker_fn)
+	return function()
+		return picker_fn({
+			actions = {
+				-- "+accept" isn't required since `accept` is implied with actions
+				["ctrl-q"] = { fn = require("fzf-lua").actions.file_sel_to_qf, prefix = "select-all" },
+			},
+		})
+	end
+end
+
 -- FzfLua Keybinds
 M.map_fzflua_keybinds = function()
 	local fzflua = require("fzf-lua")
 	vim.keymap.set("n", "<C-p>", fzflua.buffers, { desc = "Buffer picker" })
-	vim.keymap.set("n", "<leader>ff", fzflua.files, { desc = "File picker" })
-	vim.keymap.set("n", "<leader>fw", fzflua.live_grep, { desc = "Live grep across worspace" })
+	vim.keymap.set("n", "<leader>ff", add_ctrl_q_to_picker(fzflua.files), { desc = "File picker" })
+	vim.keymap.set("n", "<leader>fw", add_ctrl_q_to_picker(fzflua.live_grep), { desc = "Live grep across workspace" })
 	vim.keymap.set("n", "<leader>/", function()
-		require("fzf-lua").lgrep_curbuf({ previewer = false })
+		require("fzf-lua").lgrep_curbuf({
+			previewer = false,
+			actions = {
+
+				["ctrl-q"] = { fn = require("fzf-lua").actions.file_sel_to_qf, prefix = "select-all" },
+			},
+		})
 	end, { desc = "Live grep current buff" })
-	vim.keymap.set("v", "<leader>fw", fzflua.grep_visual, { desc = "Grep visual selection in workspace" })
-	vim.keymap.set("n", "<leader>fW", fzflua.grep_cword, { desc = "Grep current word in worspace" })
+	vim.keymap.set(
+		"v",
+		"<leader>fw",
+		add_ctrl_q_to_picker(fzflua.grep_visual),
+		{ desc = "Grep visual selection in workspace" }
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>fW",
+		add_ctrl_q_to_picker(fzflua.grep_cword),
+		{ desc = "Grep current word in workspace" }
+	)
 	vim.keymap.set("n", '<leader>f"', fzflua.registers, { desc = "Register picker" })
 	vim.keymap.set("n", "<leader>fo", function()
 		fzflua.colorschemes({ winopts = { height = 0.45, width = 0.30 } })
 	end, { desc = "Colorscheme picker" })
 	vim.keymap.set("n", "<leader>ld", fzflua.lsp_definitions, { desc = "LSP definitions" })
-	vim.keymap.set("n", "<leader>lr", fzflua.lsp_references, { desc = "LSP references" })
-	vim.keymap.set("n", "<leader>li", fzflua.lsp_implementations, { desc = "LSP implementations" })
+	vim.keymap.set("n", "<leader>lr", add_ctrl_q_to_picker(fzflua.lsp_references), { desc = "LSP references" })
+	vim.keymap.set(
+		"n",
+		"<leader>li",
+		add_ctrl_q_to_picker(fzflua.lsp_implementations),
+		{ desc = "LSP implementations" }
+	)
 	vim.keymap.set("n", "<leader>ls", fzflua.lsp_document_symbols, { desc = "LSP current buffer symbols" })
 	vim.keymap.set("n", "<leader>lS", fzflua.lsp_live_workspace_symbols, { desc = "LSP workspace symbols" })
-	vim.keymap.set("n", "<leader>xx", fzflua.lsp_workspace_diagnostics, { desc = "LSP workspace diagnostics" })
+	vim.keymap.set(
+		"n",
+		"<leader>xx",
+		add_ctrl_q_to_picker(fzflua.lsp_workspace_diagnostics),
+		{ desc = "LSP workspace diagnostics" }
+	)
 end
 
 -- LSP Keybinds (per-buffer)
